@@ -39,6 +39,16 @@ The site uses a strict content/presentation/behaviour separation across three fi
 ## TODO
 
 - **Fix email sending** — the contact form and order modal both use Formspree placeholders. The contact form still uses a simulated `setTimeout`. Wire both up to real Formspree endpoints (sign up at formspree.io, create two forms pointing to `discepoliteam@gmail.com`, paste the endpoint URLs into `CONFIG.merch.orderEndpoint` and the contact form fetch call in `script.js`).
-- **Better merch order form** — the current modal is functional but basic. Consider adding: product image preview inside the modal, size guide tooltip, order summary before submission, and confirmation email to the buyer.
-- **Better mobile UI** — review and improve layout on small screens: the team grid (4 columns) collapses poorly on mobile, the roadmap timeline zigzag is hard to read on narrow viewports, and the navbar can overflow on very small devices.
+- **Better merch order form** — the current modal is functional but basic. Consider adding: product image preview inside the modal, size guide tooltip, order summary before submission, and confirmation email to the buyer. Also multiple images per product.
+- **Better mobile UI** — review and improve layout on small screens: the team grid (4 columns) collapses poorly on mobile and i don't want to scroll all the grid to pass through this section, the roadmap timeline zigzag is hard to read on narrow viewports, and the navbar can overflow on very small devices.
 - **Dynamic description** — dynamic "We are ..." description under the header. We should be able to define a set of words like "a rugby team", "a cult", "the best in town" that complete the line.
+- reachable site, actually is not reachable out of local network
+- official gallery links (drive)
+- fans section poorly rendered
+- don't add photo in git, just add it in server (add them to personal nas?)
+- add dade to the board as photographer
+- add sponsors section
+- add "OUT of order" in some merch and "find out with team members"
+- use static form instead of formspree for free plan email OR other (do not pay!)
+- wire email from CONTACT US to personal email
+- make the source code private
