@@ -44,6 +44,7 @@ const navSections = [
   { label: 'Roadmap',  href: '#roadmap'  },
   { label: 'Merch',    href: '#merch'    },
   { label: 'Tifosi',   href: '#fans'     },
+  { label: 'Board',    href: '#board'    },
   { label: 'Contatti', href: '#contacts', cta: true },
 ];
 
@@ -160,11 +161,12 @@ roadmap.years.forEach(({ year, status, tournaments }, yearIndex) => {
 
   const timeline = el('div', 'timeline');
 
-  tournaments.forEach(({ name, location, result }, i) => {
+  tournaments.forEach(({ name, location, result, image }, i) => {
     const side = sides[i % 2];
     timeline.appendChild(el('div', `timeline-item ${side}`, `
       <div class="timeline-dot"></div>
       <div class="timeline-content">
+        ${image ? `<img class="tournament-img" src="${image}" alt="${name}" loading="lazy" />` : ''}
         ${location ? `<span class="timeline-year">📍 ${location}</span>` : ''}
         <h3>${name}</h3>
         ${result ? `<span class="tournament-result">${result}</span>` : ''}
@@ -232,6 +234,24 @@ merch.products.forEach(({ name, desc, price, badge, badgeStyle, image }) => {
       <span class="merch-price">${price}</span>
       <button class="btn btn-primary btn-sm" disabled>Coming Soon</button>
     </div>
+  `));
+});
+
+// ── Holy Board ────────────────────────────────────────────────────────────
+const { board } = CONFIG;
+document.getElementById('board-header').innerHTML = sectionHeader(board.tag, board.title, board.subtitle);
+
+const boardGrid = document.getElementById('board-grid');
+board.members.forEach(({ name, role, bio, photo }) => {
+  const photoHTML = photo
+    ? `<img class="board-photo" src="${photo}" alt="${name}" loading="lazy" />`
+    : `<div class="board-photo board-photo-placeholder">👤</div>`;
+
+  boardGrid.appendChild(el('div', 'board-card', `
+    ${photoHTML}
+    <h3 class="board-name">${name}</h3>
+    <span class="board-role">${role}</span>
+    <p class="board-bio">${bio}</p>
   `));
 });
 

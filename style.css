@@ -647,6 +647,15 @@ img { display: block; max-width: 100%; }
 }
 
 /* result badge inside timeline */
+.tournament-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  display: block;
+}
+
 .tournament-result {
   display: inline-block;
   margin-top: 8px;
@@ -744,6 +753,71 @@ img { display: block; max-width: 100%; }
   padding: 16px;
   border: 1px dashed var(--border);
   border-radius: var(--radius-sm);
+}
+
+/* ═══════════════════════════
+   HOLY BOARD
+   ═══════════════════════════ */
+.board-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px 32px;
+}
+
+.board-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 160px;
+}
+
+.board-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border);
+  margin-bottom: 16px;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.board-card:hover .board-photo {
+  border-color: var(--green);
+  transform: scale(1.05);
+}
+
+.board-photo-placeholder {
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: rgba(255,255,255,0.15);
+}
+
+.board-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.board-role {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+
+.board-bio {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.55;
 }
 
 /* ═══════════════════════════
