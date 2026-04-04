@@ -136,6 +136,44 @@
     </div>
   </footer>
 
+  <!-- Order Modal -->
+  <div class="modal-overlay" id="order-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <button class="modal-close" id="modal-close" aria-label="Chiudi">✕</button>
+      <p class="modal-eyebrow" id="modal-eyebrow"></p>
+      <h3 class="modal-title" id="modal-title"></h3>
+      <form class="modal-form" id="order-form">
+        <input type="hidden" name="product" id="order-product" />
+        <div class="form-group">
+          <label for="order-name" id="label-order-name">Nome</label>
+          <input type="text" id="order-name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="order-email" id="label-order-email">Email</label>
+          <input type="email" id="order-email" name="email" />
+        </div>
+        <div class="form-group">
+          <label for="order-phone" id="label-order-phone">Telefono</label>
+          <input type="tel" id="order-phone" name="phone" required />
+        </div>
+        <div class="form-group" id="size-group">
+          <label for="order-size" id="label-order-size">Taglia</label>
+          <select id="order-size" name="size"></select>
+        </div>
+        <div class="form-group">
+          <label for="order-qty" id="label-order-qty">Quantità</label>
+          <input type="number" id="order-qty" name="quantity" min="1" value="1" required />
+        </div>
+        <div class="form-group">
+          <label for="order-msg" id="label-order-msg">Messaggio personalizzato</label>
+          <textarea id="order-msg" name="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="order-submit">Invia ordine</button>
+        <p class="form-feedback" id="order-feedback"></p>
+      </form>
+    </div>
+  </div>
+
   <script src="config.js"></script>
   <script src="script.js"></script>
 </body>

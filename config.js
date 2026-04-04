@@ -3,6 +3,11 @@
  * ║          I DISCEPOLI – CONFIGURATION FILE            ║
  * ║  Edit this file to update all website content.       ║
  * ║  You never need to touch index.html or script.js.    ║
+ * ║                                                      ║
+ * ║  Text fields support two languages:                  ║
+ * ║    { it: "Testo italiano", en: "English text" }      ║
+ * ║  If only one language is provided it is used for     ║
+ * ║  both. Plain strings are always shown as-is.         ║
  * ╚══════════════════════════════════════════════════════╝
  */
 
@@ -10,159 +15,262 @@ const CONFIG = {
 
   // ── Site identity ────────────────────────────────────
   site: {
-    title:      "I Discepoli – Rugby Team",
-    teamName:   "I Discepoli",
-    eyebrow:    "Rugby Club · Estate",
-    tagline:    "Uniti dal fango, dalla passione e dal terzo tempo.",
-    // Accent color — changes the whole color scheme
+    title:       "I Discepoli – Rugby Team",
+    teamName:    "I Discepoli",
     accentColor: "#2dce6c",
+    eyebrow: { it: "Rugby Club · Estate",                       en: "Rugby Club · Summer"                          },
+    tagline: { it: "Uniti dal fango, dalla passione e dal terzo tempo.", en: "United by mud, passion, and the after-match." },
   },
 
-  // ── Hero buttons ─────────────────────────────────────
+  // ── UI strings (form, nav, footer) ───────────────────
+  ui: {
+    nav: {
+      values:   { it: "Valori",   en: "Values"   },
+      team:     { it: "Team",     en: "Team"      },
+      gallery:  { it: "Galleria", en: "Gallery"   },
+      roadmap:  { it: "Roadmap",  en: "Roadmap"   },
+      merch:    { it: "Merch",    en: "Merch"     },
+      fans:     { it: "Tifosi",   en: "Fans"      },
+      board:    { it: "Board",    en: "Board"     },
+      contacts: { it: "Contatti", en: "Contacts"  },
+    },
+    hero: {
+      primary:   { it: "Scopri il Team", en: "Meet the Team" },
+      secondary: { it: "Shop Merch",     en: "Shop Merch"    },
+    },
+    contact: {
+      emailLabel:    { it: "Email",          en: "Email"        },
+      phoneLabel:    { it: "Telefono",       en: "Phone"        },
+      locationLabel: { it: "Dove giochiamo", en: "Where we play"},
+    },
+    form: {
+      name:        { it: "Nome",             en: "Name"            },
+      namePh:      { it: "Il tuo nome",      en: "Your name"       },
+      email:       { it: "Email",            en: "Email"           },
+      emailPh:     { it: "la@tua.email",     en: "your@email.com"  },
+      message:     { it: "Messaggio",        en: "Message"         },
+      messagePh:   { it: "Scrivi qui...",    en: "Write here..."   },
+      submit:      { it: "Invia messaggio",  en: "Send message"    },
+      sending:     { it: "Invio in corso…",  en: "Sending…"        },
+      success:     { it: "✓ Messaggio inviato! Ti risponderemo presto.", en: "✓ Message sent! We'll get back to you soon." },
+    },
+    buy:         { it: "Acquista",                  en: "Buy"                  },
+    order: {
+      eyebrow:   { it: "Ordine per",               en: "Order for"            },
+      name:      { it: "Il tuo nome",              en: "Your name"            },
+      email:     { it: "La tua email (opzionale)",  en: "Your email (optional)"},
+      phone:     { it: "Il tuo telefono",           en: "Your phone number"    },
+      size:      { it: "Taglia",                   en: "Size"                 },
+      qty:       { it: "Quantità",                 en: "Quantity"             },
+      msg:       { it: "Messaggio personalizzato (opzionale)", en: "Custom message (optional)" },
+      submit:    { it: "Invia ordine",             en: "Send order"           },
+      sending:   { it: "Invio in corso…",          en: "Sending…"             },
+      success:   { it: "✓ Ordine ricevuto! Ti contatteremo presto.", en: "✓ Order received! We'll contact you soon." },
+      error:     { it: "Errore nell'invio. Riprova o scrivici direttamente.", en: "Send error. Retry or contact us directly." },
+    },
+    footerCopy:  { it: "Tutti i diritti riservati.", en: "All rights reserved." },
+    addPhoto:    { it: "📸 Aggiungi foto",           en: "📸 Add photo"         },
+  },
+
+  // ── Hero ─────────────────────────────────────────────
   hero: {
-    primaryBtn:  { label: "Scopri il Team", href: "#team" },
-    secondaryBtn: { label: "Shop Merch",   href: "#merch" },
+    image: "photos/hero.jpg",
   },
 
   // ── Values & Objectives ──────────────────────────────
   values: {
-    tag:      "Chi siamo",
-    title:    "Valori & Obiettivi",
-    subtitle: "Siamo un gruppo di amici che ogni estate si trasforma in una squadra. Il rugby è il pretesto, la fratellanza è lo scopo.",
+    tag:      { it: "Chi siamo",           en: "About us"           },
+    title:    { it: "Valori & Obiettivi",  en: "Values & Objectives"},
+    subtitle: { it: "Siamo un gruppo di amici che ogni estate si trasforma in una squadra. Il rugby è il pretesto, la fratellanza è lo scopo.",
+                en: "We are a group of friends who turn into a team every summer. Rugby is the excuse, brotherhood is the goal." },
     items: [
       {
         icon:  "⚡",
-        title: "Spirito di squadra",
-        text:  "In campo e fuori, vince chi non lascia indietro nessuno. Ogni placcaggio è condiviso, ogni meta è di tutti.",
+        title: { it: "Spirito di squadra",  en: "Team spirit"     },
+        text:  { it: "In campo e fuori, vince chi non lascia indietro nessuno. Ogni placcaggio è condiviso, ogni meta è di tutti.",
+                 en: "On and off the pitch, the real winners are those who leave no one behind. Every tackle is shared, every try belongs to all." },
       },
       {
         icon:  "🔥",
-        title: "Passione autentica",
-        text:  "Non siamo professionisti, ma giochiamo con la stessa intensità. La passione non si allena, si vive.",
+        title: { it: "Passione autentica", en: "Authentic passion" },
+        text:  { it: "Non siamo professionisti, ma giochiamo con la stessa intensità. La passione non si allena, si vive.",
+                 en: "We're not professionals, but we play with the same intensity. Passion can't be trained — it's lived." },
       },
       {
         icon:  "🤝",
-        title: "Rispetto",
-        text:  "Per l'avversario, per il campo, per il terzo tempo. Il rugby insegna a rispettare chi ti affronta.",
+        title: { it: "Rispetto",           en: "Respect"           },
+        text:  { it: "Per l'avversario, per il campo, per il terzo tempo. Il rugby insegna a rispettare chi ti affronta.",
+                 en: "For the opponent, the field, the after-match. Rugby teaches you to respect those who face you." },
       },
       {
         icon:  "🎯",
-        title: "Obiettivi",
-        text:  "Crescere ogni anno, portare nuovi giocatori, disputare più tornei estivi e alzare qualche trofeo.",
+        title: { it: "Obiettivi",          en: "Objectives"        },
+        text:  { it: "Crescere ogni anno, portare nuovi giocatori, disputare più tornei estivi e alzare qualche trofeo.",
+                 en: "Grow every year, bring in new players, enter more summer tournaments, and lift a trophy or two." },
       },
     ],
   },
 
   // ── Team / Players ───────────────────────────────────
   team: {
-    tag:      "Il Roster",
-    title:    "I Giocatori",
-    subtitle: "Ogni Discepolo porta qualcosa di unico. Ecco chi siamo davvero.",
+    tag:      { it: "Il Roster",    en: "The Roster" },
+    title:    { it: "I Giocatori", en: "The Players" },
+    subtitle: { it: "Ogni Discepolo porta qualcosa di unico. Ecco chi siamo davvero.",
+                en: "Every Discepolo brings something unique. Here's who we really are." },
     players: [
-      {
-        number: 1,
-        name:   "Nome Cognome",
-        role:   "Pilone",
-        bio:    "Descrizione del giocatore, aneddoti, caratteristiche sul campo e fuori.",
-        photo:  "https://picsum.photos/seed/player1/400/300",
-      },
-      {
-        number: 2,
-        name:   "Nome Cognome",
-        role:   "Tallonatore",
-        bio:    "Descrizione del giocatore, aneddoti, caratteristiche sul campo e fuori.",
-        photo:  "https://picsum.photos/seed/player2/400/300",
-      },
-      {
-        number: 3,
-        name:   "Nome Cognome",
-        role:   "Mediano di mischia",
-        bio:    "Descrizione del giocatore, aneddoti, caratteristiche sul campo e fuori.",
-        photo:  "https://picsum.photos/seed/player3/400/300",
-      },
-      {
-        number: 4,
-        name:   "Nome Cognome",
-        role:   "Trequarti",
-        bio:    "Descrizione del giocatore, aneddoti, caratteristiche sul campo e fuori.",
-        photo:  "https://picsum.photos/seed/player4/400/300",
-      },
-      {
-        number: 5,
-        name:   "Nome Cognome",
-        role:   "Ala",
-        bio:    "Descrizione del giocatore, aneddoti, caratteristiche sul campo e fuori.",
-        photo:  "https://picsum.photos/seed/player5/400/300",
-      },
-      {
-        number: 6,
-        name:   "Nome Cognome",
-        role:   "Estremo",
-        bio:    "Descrizione del giocatore, aneddoti, caratteristiche sul campo e fuori.",
-        photo:  "https://picsum.photos/seed/player6/400/300",
-      },
+      { number:  1, name: "Affusino", role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player1/400/300"  },
+      { number:  2, name: "Berto",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player2/400/300"  },
+      { number:  3, name: "Biso",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player3/400/300"  },
+      { number:  4, name: "Bresh",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player4/400/300"  },
+      { number:  5, name: "Bugli A",  role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player5/400/300"  },
+      { number:  6, name: "Bugli D",  role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player6/400/300"  },
+      { number:  7, name: "Champ",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player7/400/300"  },
+      { number:  8, name: "Cristian", role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player8/400/300"  },
+      { number:  9, name: "Cuzzo",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player9/400/300"  },
+      { number: 10, name: "Dani",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player10/400/300" },
+      { number: 11, name: "Dave",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player11/400/300" },
+      { number: 12, name: "Divino",   role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player12/400/300" },
+      { number: 13, name: "Eddi",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player13/400/300" },
+      { number: 14, name: "Fabione",  role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player14/400/300" },
+      { number: 15, name: "Franco",   role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player15/400/300" },
+      { number: 16, name: "Giec",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player16/400/300" },
+      { number: 17, name: "Gino",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player17/400/300" },
+      { number: 18, name: "Grillo",   role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player18/400/300" },
+      { number: 19, name: "Guido",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player19/400/300" },
+      { number: 20, name: "Jacopo L", role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player20/400/300" },
+      { number: 21, name: "Lollo",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player21/400/300" },
+      { number: 22, name: "Mangia",   role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player22/400/300" },
+      { number: 23, name: "Mastro",   role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player23/400/300" },
+      { number: 24, name: "Mazza",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player24/400/300" },
+      { number: 25, name: "Mila",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player25/400/300" },
+      { number: 26, name: "Pablo",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player26/400/300" },
+      { number: 27, name: "Paolino",  role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player27/400/300" },
+      { number: 28, name: "Parma",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player28/400/300" },
+      { number: 29, name: "Peter",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player29/400/300" },
+      { number: 30, name: "Raoul",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player30/400/300" },
+      { number: 31, name: "Ricky D",  role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player31/400/300" },
+      { number: 32, name: "Rivo",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player32/400/300" },
+      { number: 33, name: "Romanò",   role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player33/400/300" },
+      { number: 34, name: "Ronza",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player34/400/300" },
+      { number: 35, name: "Rosso",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player35/400/300" },
+      { number: 36, name: "Saita",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player36/400/300" },
+      { number: 37, name: "Santa",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player37/400/300" },
+      { number: 38, name: "Shudo",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player38/400/300" },
+      { number: 39, name: "Signo",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player39/400/300" },
+      { number: 40, name: "Tav",      role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player40/400/300" },
+      { number: 41, name: "Telli",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player41/400/300" },
+      { number: 42, name: "Tim",      role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player42/400/300" },
+      { number: 43, name: "Tommy",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player43/400/300" },
+      { number: 44, name: "Trivi",    role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player44/400/300" },
+      { number: 45, name: "Vise",     role: { it: "Ruolo", en: "Role" }, bio: { it: "Descrizione del giocatore.", en: "Player description." }, photo: "https://picsum.photos/seed/player45/400/300" },
     ],
   },
 
   // ── Gallery ──────────────────────────────────────────
   gallery: {
-    tag:      "Momenti",
-    title:    "Galleria",
-    subtitle: "Immagini dal campo, dal terzo tempo e da tutto il resto.",
-    // Each photo: { src, alt, size }
-    // size can be: "large" (2×2), "tall" (1×2), or omit for normal (1×1)
-    // Leave the array empty [] to show placeholder tiles.
+    tag:      { it: "Momenti",  en: "Moments" },
+    title:    { it: "Galleria", en: "Gallery"  },
+    subtitle: { it: "Immagini dal campo, dal terzo tempo e da tutto il resto.",
+                en: "Photos from the pitch, the after-match, and everything in between." },
+    // size: "large" (2×2), "tall" (1×2), or omit for normal
     photos: [
-      { src: "https://picsum.photos/seed/gal1/800/600", alt: "Partita 2025",       size: "large" },
-      { src: "https://picsum.photos/seed/gal2/400/300", alt: "Terzo tempo" },
-      { src: "https://picsum.photos/seed/gal3/400/300", alt: "Riscaldamento" },
-      { src: "https://picsum.photos/seed/gal4/400/600", alt: "Foto di squadra",    size: "tall" },
-      { src: "https://picsum.photos/seed/gal5/400/300", alt: "In campo" },
-      { src: "https://picsum.photos/seed/gal6/400/300", alt: "Esultanza" },
-      { src: "https://picsum.photos/seed/gal7/400/300", alt: "Allenamento" },
+      { src: "https://picsum.photos/seed/gal1/800/600", alt: { it: "Partita 2025",    en: "Match 2025"       }, size: "large" },
+      { src: "https://picsum.photos/seed/gal2/400/300", alt: { it: "Terzo tempo",     en: "After-match"      } },
+      { src: "https://picsum.photos/seed/gal3/400/300", alt: { it: "Riscaldamento",   en: "Warm-up"          } },
+      { src: "https://picsum.photos/seed/gal4/400/600", alt: { it: "Foto di squadra", en: "Team photo"       }, size: "tall" },
+      { src: "https://picsum.photos/seed/gal5/400/300", alt: { it: "In campo",        en: "On the pitch"     } },
+      { src: "https://picsum.photos/seed/gal6/400/300", alt: { it: "Esultanza",       en: "Celebration"      } },
+      { src: "https://picsum.photos/seed/gal7/400/300", alt: { it: "Allenamento",     en: "Training"         } },
     ],
     placeholderCount: 7,
   },
 
   // ── Roadmap ──────────────────────────────────────────
-  // Each entry is a year with a list of tournaments.
-  // status: "past" | "active" | "future"
-  // Tournament result is optional — omit if not applicable.
   roadmap: {
-    tag:      "La nostra storia",
-    title:    "Roadmap",
-    subtitle: "I tornei a cui abbiamo partecipato, anno per anno.",
+    tag:      { it: "La nostra storia", en: "Our story"                         },
+    title:    { it: "Roadmap",          en: "Roadmap"                           },
+    subtitle: { it: "I tornei a cui abbiamo partecipato, anno per anno.",
+                en: "The tournaments we've entered, year by year."               },
     years: [
       {
-        year:   "2024",
-        status: "past",
+        year: "2019", status: "past",
         tournaments: [
-          { name: "Torneo Estivo Example", location: "Milano", result: "3° posto",      image: "https://picsum.photos/seed/rugby1/600/300" },
-          { name: "Coppa Amici Rugby",     location: "Torino", result: "Partecipazione", image: "https://picsum.photos/seed/rugby2/600/300" },
+          { name: { it: "Seven of the Heaven",  en: "Seven of the Heaven"  }, location: "19/05" },
+          { name: { it: "Beach Cologno",         en: "Beach Cologno"        }, location: "25/05" },
+          { name: { it: "Cologno",               en: "Cologno"              }, location: "01/06" },
+          { name: { it: "MRF",                   en: "MRF"                  }, location: "7-8-9/06" },
+          { name: { it: "Gussago Seven",         en: "Gussago Seven"        }, location: "15/06" },
+          { name: { it: "Valdobbiadene",         en: "Valdobbiadene"        }, location: "22/06" },
+          { name: { it: "PizziTorneo",           en: "PizziTorneo"          }, location: "29/06" },
+          { name: { it: "Alpago Beach",          en: "Alpago Beach"         }, location: "06/07" },
+          { name: { it: "Grigliatona Cuoricina", en: "Grigliatona Cuoricina"}, location: "13-14/07" },
+          { name: { it: "X-Masters",             en: "X-Masters"            }, location: "20-21/07" },
+          { name: { it: "Ritiro Spirituale",     en: "Ritiro Spirituale"    }, location: "27-28/07" },
         ],
       },
       {
-        year:   "2025",
-        status: "past",
+        year: "2022", status: "past",
         tournaments: [
-          { name: "Torneo del Fango",    location: "Roma",    result: "Finalisti",        image: "https://picsum.photos/seed/rugby3/600/300" },
-          { name: "Summer Rugby Cup",    location: "Firenze", result: "1° posto 🏆",      image: "https://picsum.photos/seed/rugby4/600/300" },
-          { name: "Trofeo Città Aperta", location: "Napoli",  result: "Partecipazione" },
+          { name: { it: "Arena Sevens",      en: "Arena Sevens"      }, location: "18/06" },
+          { name: { it: "Rosolina Beach",    en: "Rosolina Beach"    }, location: "02-03/07" },
+          { name: { it: "Grigliata Ottiglio",en: "Grigliata Ottiglio"}, location: "09-10/07" },
+          { name: { it: "Alpago Beach",      en: "Alpago Beach"      }, location: "16-17/07" },
         ],
       },
       {
-        year:   "2026",
-        status: "active",
+        year: "2023", status: "past",
         tournaments: [
-          { name: "Torneo Estivo Example", location: "Bologna", result: "In corso...", image: "https://picsum.photos/seed/rugby5/600/300" },
-          // Add more as the season progresses
+          { name: { it: "OffBeat 7's / Lainate 7's", en: "OffBeat 7's / Lainate 7's" }, location: "27/05" },
+          { name: { it: "MRF",                       en: "MRF"                        }, location: "03-04/06" },
+          { name: { it: "Novara Beach",              en: "Novara Beach"               }, location: "17/06" },
+          { name: { it: "Figueira Beach",            en: "Figueira Beach"             }, location: "30/06-03/07" },
+          { name: { it: "Alpago Beach",              en: "Alpago Beach"               }, location: "15/07" },
         ],
       },
       {
-        year:   "2027",
-        status: "future",
+        year: "2024", status: "past",
         tournaments: [
-          { name: "Obiettivo: vincere tutto", location: "Da definire" },
+          { name: { it: "MRF",                    en: "MRF"                    }, location: "31/05-02/06" },
+          { name: { it: "Arena Sevens",           en: "Arena Sevens"           }, location: "08/06" },
+          { name: { it: "Annone Touch",           en: "Annone Touch"           }, location: "15/06" },
+          { name: { it: "L'aia Beach",            en: "L'aia Beach"            }, location: "22-23/06 🇳🇱" },
+          { name: { it: "Grigliata Ottiglio",     en: "Grigliata Ottiglio"     }, location: "29-30/06" },
+          { name: { it: "Tolosa Water Touch",     en: "Tolosa Water Touch"     }, location: "06-07/07 🇫🇷" },
+          { name: { it: "Alpago Beach",           en: "Alpago Beach"           }, location: "13-14/07" },
+          { name: { it: "Attività fine stagione", en: "End of season activity" }, location: "20-21/07" },
+        ],
+      },
+      {
+        year: "2025", status: "past",
+        tournaments: [
+          { name: { it: "Snow Rugby",                  en: "Snow Rugby"              }, location: "11-12/01" },
+          { name: { it: "Noceto Touch",                en: "Noceto Touch"            }, location: "24-25/05" },
+          { name: { it: "MRF",                         en: "MRF"                     }, location: "31/05-01/06" },
+          { name: { it: "Torneo Città di Rovato",      en: "Torneo Città di Rovato"  }, location: "07/06" },
+          { name: { it: "Varese 7's",                  en: "Varese 7's"              }, location: "14/06" },
+          { name: { it: "Touch Annone",                en: "Touch Annone"            }, location: "21/06" },
+          { name: { it: "Grigliata Ottiglio",          en: "Grigliata Ottiglio"      }, location: "28/06" },
+          { name: { it: "Alpago Beach",                en: "Alpago Beach"            }, location: "12-13/07" },
+          { name: { it: "Cheltenham 7's",              en: "Cheltenham 7's"          }, location: "18-19/07 🇬🇧" },
+        ],
+      },
+      {
+        year: "2026", status: "active",
+        tournaments: [
+          { name: { it: "Touch Cluri",                         en: "Touch Cluri"                         }, location: "02/05" },
+          { name: { it: "Festa Discepoli",                     en: "Festa Discepoli"                     }, location: "9 o 16/05" },
+          { name: { it: "San Marino 7's",                      en: "San Marino 7's"                      }, location: "23-24/05" },
+          { name: { it: "MRF",                                 en: "MRF"                                 }, location: "30-31/05" },
+          { name: { it: "Nocetouch / Para 7's",                en: "Nocetouch / Para 7's"                }, location: "06/06" },
+          { name: { it: "Varese 7's / Rovato 7's / Valtellina 7's", en: "Varese 7's / Rovato 7's / Valtellina 7's" }, location: "13/06" },
+          { name: { it: "Annone Touch / Off Beat 7's",         en: "Annone Touch / Off Beat 7's"         }, location: "20/06" },
+          { name: { it: "Calvi 7's",                           en: "Calvi 7's"                           }, location: "27-28/06" },
+        ],
+      },
+      {
+        year: "2027", status: "future",
+        tournaments: [
+          { name: { it: "Obiettivo: vincere tutto", en: "Goal: win everything" }, location: { it: "Da definire", en: "TBD" } },
         ],
       },
     ],
@@ -170,120 +278,66 @@ const CONFIG = {
 
   // ── Best Fans ─────────────────────────────────────────
   fans: {
-    tag:      "Curva Sud",
-    title:    "I Migliori Tifosi",
-    subtitle: "Chi ci supporta dal bordo campo, nel fango, con la birra in mano. Eroi silenziosi.",
+    tag:      { it: "Curva Sud",          en: "The Stands"    },
+    title:    { it: "I Migliori Tifosi",  en: "Best Fans"     },
+    subtitle: { it: "Chi ci supporta dal bordo campo, nel fango, con la birra in mano. Eroi silenziosi.",
+                en: "Those who support us from the sideline, in the mud, beer in hand. Silent heroes." },
     fans: [
-      {
-        name:  "Nome Tifoso",
-        title: "Fan #1",
-        bio:   "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.",
-        photo: "https://picsum.photos/seed/fan1/400/300",
-      },
-      {
-        name:  "Nome Tifoso",
-        title: "Fan #2",
-        bio:   "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.",
-        photo: "https://picsum.photos/seed/fan2/400/300",
-      },
-      {
-        name:  "Nome Tifoso",
-        title: "Fan #3",
-        bio:   "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.",
-        photo: "https://picsum.photos/seed/fan3/400/300",
-      },
-    ],
-  },
-
-  // ── Merch ────────────────────────────────────────────
-  merch: {
-    tag:      "Store",
-    title:    "Merch",
-    subtitle: "Indossa i colori dei Discepoli. Essere parte della famiglia non è solo in campo.",
-    note:     "Il negozio aprirà presto. Contattaci per pre-ordini o taglie speciali.",
-    products: [
-      {
-        name:      "Jersey Ufficiale",
-        desc:      "La maglia da gioco. Tessuto tecnico, colori della squadra, orgoglio garantito.",
-        price:     "€ 45,00",
-        badge:     "Bestseller",
-        image:     "https://picsum.photos/seed/merch1/400/400",
-      },
-      {
-        name:  "Hoodie Discepoli",
-        desc:  "Per il terzo tempo, per il dopo-allenamento, per sempre.",
-        price: "€ 55,00",
-        image: "https://picsum.photos/seed/merch2/400/400",
-      },
-      {
-        name:       "Cap Ricamato",
-        desc:       "Il logo dei Discepoli ricamato su cappellino snapback. Stile da campioni.",
-        price:      "€ 25,00",
-        badge:      "New",
-        badgeStyle: "new",
-        image:      "https://picsum.photos/seed/merch3/400/400",
-      },
-      {
-        name:  "Borsa da Sport",
-        desc:  "Capiente, resistente, con il logo. Per portare tutto (inclusa la scusa per essere in ritardo).",
-        price: "€ 35,00",
-        image: "https://picsum.photos/seed/merch4/400/400",
-      },
+      { name: "Alice", title: { it: "Fan #1", en: "Fan #1" }, bio: { it: "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.", en: "Fan description — how long they've followed the team, anecdotes, why they're the best." }, photo: "https://picsum.photos/seed/fan1/400/300" },
+      { name: "Rwan",  title: { it: "Fan #2", en: "Fan #2" }, bio: { it: "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.", en: "Fan description — how long they've followed the team, anecdotes, why they're the best." }, photo: "https://picsum.photos/seed/fan2/400/300" },
+      { name: "Potti", title: { it: "Fan #3", en: "Fan #3" }, bio: { it: "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.", en: "Fan description — how long they've followed the team, anecdotes, why they're the best." }, photo: "https://picsum.photos/seed/fan3/400/300" },
     ],
   },
 
   // ── Holy Board ───────────────────────────────────────
   board: {
-    tag:      "La Dirigenza",
-    title:    "The Holy Board",
-    subtitle: "Le menti (e le colpe) dietro I Discepoli. Persone straordinarie con troppo tempo libero.",
+    tag:      { it: "La Dirigenza",    en: "Management"      },
+    title:    { it: "The Holy Board",  en: "The Holy Board"  },
+    subtitle: { it: "Le menti (e le colpe) dietro I Discepoli. Persone straordinarie con troppo tempo libero.",
+                en: "The minds (and the blame) behind I Discepoli. Extraordinary people with too much free time." },
     members: [
-      {
-        name:  "Nome Cognome",
-        role:  "Presidente",
-        bio:   "Fondatore, visionario, responsabile di tutte le decisioni sbagliate.",
-        photo: "https://picsum.photos/seed/board1/200/200",
-      },
-      {
-        name:  "Nome Cognome",
-        role:  "Vice Presidente",
-        bio:   "Corregge le decisioni sbagliate del presidente. Con risultati alterni.",
-        photo: "https://picsum.photos/seed/board2/200/200",
-      },
-      {
-        name:  "Nome Cognome",
-        role:  "Segretario",
-        bio:   "L'unico che sa dove sono i documenti. Forse.",
-        photo: "https://picsum.photos/seed/board3/200/200",
-      },
-      {
-        name:  "Nome Cognome",
-        role:  "Tesoriere",
-        bio:   "Gestisce il budget della squadra. Spoiler: non basta mai.",
-        photo: "https://picsum.photos/seed/board4/200/200",
-      },
-      {
-        name:  "Nome Cognome",
-        role:  "Responsabile Merch",
-        bio:   "Ha avuto l'idea delle maglie. Si prende tutto il merito.",
-        photo: "https://picsum.photos/seed/board5/200/200",
-      },
+      { name: "Giec",   role: { it: "Mastermind & Devil Reincarnated",       en: "Mastermind & Devil Reincarnated"    }, bio: { it: "Il cervello dietro tutto. O almeno così dice lui.",                                                          en: "The brain behind everything. Or so he claims."                                              }, photo: "https://picsum.photos/seed/board1/200/200" },
+      { name: "Ali",    role: { it: "Super Social Media Manager",            en: "Super Social Media Manager"        }, bio: { it: "Gestisce i social con stile. Ha anche dei difetti, ma non è questo il momento.",                            en: "Manages socials with style. She also has flaws, but this is not the time."                  }, photo: "https://picsum.photos/seed/board2/200/200" },
+      { name: "Rwu",    role: { it: "Segretaria, aguzzina e ricattatrice",   en: "Secretary, tormentor & blackmailer"}, bio: { it: "Tiene i registri, tiene le redini e tiene in pugno tutti. Ha anche dei difetti.",                           en: "Keeps the records, the reins, and everyone in her grip. She also has flaws."               }, photo: "https://picsum.photos/seed/board3/200/200" },
+      { name: "Shudo",  role: { it: "Tesoriere",                             en: "Treasurer"                        }, bio: { it: "Controlla il budget. Spoiler: non basta mai.",                                                              en: "Controls the budget. Spoiler: it's never enough."                                           }, photo: "https://picsum.photos/seed/board4/200/200" },
+      { name: "Divino", role: { it: "L'unico e il solo",                     en: "The one and only"                 }, bio: { it: "Non ha bisogno di presentazioni. Lo sa anche lui.",                       en: "Needs no introduction. He knows it too."                    }, photo: "https://picsum.photos/seed/board5/200/200" },
+      { name: "Tommy",  role: { it: "Comunicazioni & Iscrizioni ai Tornei", en: "Communications & Tournament Entry" }, bio: { it: "Si occupa di comunicare e iscrivere la squadra ai tornei. Senza di lui non giocheremmo da nessuna parte.", en: "Handles comms and tournament registrations. Without him we'd play nowhere." }, photo: "https://picsum.photos/seed/board6/200/200" },
+    ],
+  },
+
+  // ── Merch ────────────────────────────────────────────
+  merch: {
+    tag:      { it: "Store",   en: "Store"  },
+    title:    { it: "Merch",   en: "Merch"  },
+    subtitle: { it: "Indossa i colori dei Discepoli. Essere parte della famiglia non è solo in campo.",
+                en: "Wear the Discepoli colours. Being part of the family goes beyond the pitch." },
+    note:     { it: "Per qualsiasi domanda scrivici a discepoliteam@gmail.com",
+                en: "For any question write us at discepoliteam@gmail.com" },
+    // ↓ Get this URL from formspree.io after creating a free form pointed at discepoliteam@gmail.com
+    orderEndpoint: "https://formspree.io/f/YOUR_FORM_ID",
+    products: [
+      { name: { it: "Maglietta",     en: "T-Shirt"     }, desc: { it: "La classica maglietta dei Discepoli. Cotone morbido, logo stampato, da indossare sempre.",             en: "The classic Discepoli tee. Soft cotton, printed logo, wear it everywhere."        }, price: "€ 20,00", sizes: ["XS","S","M","L","XL","XXL"],  image: "https://picsum.photos/seed/merch1/400/400" },
+      { name: { it: "Divisa (2025)", en: "Kit (2025)" }, desc: { it: "La divisa ufficiale della stagione 2025. Tessuto tecnico, colori della squadra, orgoglio garantito.", en: "The official 2025 season kit. Technical fabric, team colours, guaranteed pride."    }, price: "€ 45,00", sizes: ["XS","S","M","L","XL","XXL"],  badge: { it: "Bestseller", en: "Bestseller" }, image: "https://picsum.photos/seed/merch2/400/400" },
+      { name: { it: "Pantaloncini", en: "Shorts"      }, desc: { it: "Pantaloncini da gioco abbinati alla divisa. Leggeri e resistenti al fango (più o meno).",             en: "Match shorts to pair with the kit. Lightweight and mud-resistant (more or less)."  }, price: "€ 25,00", sizes: ["XS","S","M","L","XL","XXL"],  image: "https://picsum.photos/seed/merch3/400/400" },
+      { name: { it: "Cappellino",   en: "Cap"         }, desc: { it: "Il logo dei Discepoli ricamato su cappellino snapback. Stile da campioni.",                            en: "The Discepoli logo embroidered on a snapback cap. Champions' style."              }, price: "€ 18,00", sizes: ["Unica"],                        badge: { it: "Nuovo", en: "New" }, badgeStyle: "new", image: "https://picsum.photos/seed/merch4/400/400" },
+      { name: { it: "Canotta",      en: "Vest"        }, desc: { it: "Canotta tecnica per gli allenamenti estivi. Fresca, leggera, con il logo sul petto.",                 en: "Technical vest for summer training. Cool, light, with the logo on the chest."      }, price: "€ 22,00", sizes: ["XS","S","M","L","XL","XXL"],  image: "https://picsum.photos/seed/merch5/400/400" },
+      { name: { it: "Santini",      en: "Cycling Top" }, desc: { it: "Per i Discepoli che pedalano. Santino ufficiale per chi vuole soffrire anche in bici.",              en: "For the Discepoli who cycle. Official cycling top for those who like to suffer."   }, price: "€ 35,00", sizes: ["XS","S","M","L","XL","XXL"],  image: "https://picsum.photos/seed/merch6/400/400" },
+      { name: { it: "Sticker",      en: "Sticker"     }, desc: { it: "Adesivi ufficiali dei Discepoli. Attaccarli ovunque è obbligatorio per statuto.",                    en: "Official Discepoli stickers. Sticking them everywhere is mandatory by statute."   }, price: "€ 3,00",  sizes: [],                              image: "https://picsum.photos/seed/merch7/400/400" },
     ],
   },
 
   // ── Contacts ─────────────────────────────────────────
   contacts: {
-    tag:      "Parlaci",
-    title:    "Contatti",
-    subtitle: "Vuoi unirti? Vuoi sfidarci? Vuoi solo mandarci un saluto? Siamo qui.",
-    email:    "discepoli@rugby.it",
-    phone:    "+39 000 000 0000",
-    location: "Campo da inserire, Città",
-    // Set to null to hide a social icon
+    tag:      { it: "Parlaci",  en: "Talk to us"  },
+    title:    { it: "Contatti", en: "Contacts"     },
+    subtitle: { it: "Vuoi unirti? Vuoi sfidarci? Vuoi solo mandarci un saluto? Siamo qui.",
+                en: "Want to join? Want to challenge us? Just want to say hi? We're here." },
+      email: "discepoliteam@gmail.it",
+    phone:    "+39 366 3586183",
+    location: "Paradiso, Ovunque",
     socials: {
-      instagram: "#",
-      whatsapp:  "#",
-      facebook:  "#",
+      instagram: "https://www.instagram.com/i_discepoli/",
+      facebook:  "https://es-la.facebook.com/IDiscepoliRugby/",
     },
   },
 

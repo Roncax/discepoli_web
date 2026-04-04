@@ -35,3 +35,9 @@ The site uses a strict content/presentation/behaviour separation across three fi
 - Roadmap item `status` must be `"past"`, `"active"`, or `"future"` — drives CSS classes and the glowing dot.
 - Merch badge color: default green; add `badgeStyle: "new"` for gold.
 - Setting a social to `null` in `CONFIG.contacts.socials` hides that icon entirely.
+
+## TODO
+
+- **Fix email sending** — the contact form and order modal both use Formspree placeholders. The contact form still uses a simulated `setTimeout`. Wire both up to real Formspree endpoints (sign up at formspree.io, create two forms pointing to `discepoliteam@gmail.com`, paste the endpoint URLs into `CONFIG.merch.orderEndpoint` and the contact form fetch call in `script.js`).
+- **Better merch order form** — the current modal is functional but basic. Consider adding: product image preview inside the modal, size guide tooltip, order summary before submission, and confirmation email to the buyer.
+- **Better mobile UI** — review and improve layout on small screens: the team grid (4 columns) collapses poorly on mobile, the roadmap timeline zigzag is hard to read on narrow viewports, and the navbar can overflow on very small devices.

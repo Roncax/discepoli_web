@@ -1,6 +1,5 @@
 /* ═══════════════════════════════════════════════
    I Discepoli – script.js
-   Reads CONFIG from config.js and builds the DOM.
    ═══════════════════════════════════════════════ */
 
 // ── SVG icons ─────────────────────────────────────────────────────────────
@@ -10,6 +9,18 @@ const ICONS = {
   facebook:  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`,
 };
 
+// ═══════════════════════════════════════════════
+// LANGUAGE
+// ═══════════════════════════════════════════════
+let lang = localStorage.getItem('discepoli-lang') || 'it';
+
+// t() — resolves a field to the current language string
+function t(field) {
+  if (field === null || field === undefined) return '';
+  if (typeof field === 'object') return field[lang] ?? field.it ?? '';
+  return field;
+}
+
 // ── Helpers ────────────────────────────────────────────────────────────────
 function el(tag, cls, html) {
   const e = document.createElement(tag);
@@ -18,294 +29,467 @@ function el(tag, cls, html) {
   return e;
 }
 
+function clear(id) {
+  document.getElementById(id).innerHTML = '';
+}
+
 function sectionHeader(tag, title, subtitle) {
   return `
-    <span class="tag">${tag}</span>
-    <h2 class="section-title">${title}</h2>
-    ${subtitle ? `<p class="section-subtitle">${subtitle}</p>` : ''}
+    <span class="tag">${t(tag)}</span>
+    <h2 class="section-title">${t(title)}</h2>
+    ${subtitle ? `<p class="section-subtitle">${t(subtitle)}</p>` : ''}
   `;
 }
 
-// ── Apply accent color ─────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════
+// ONE-TIME SETUP (runs once, not on lang switch)
+// ═══════════════════════════════════════════════
+
+// Accent color
 if (CONFIG.site.accentColor) {
   document.documentElement.style.setProperty('--green', CONFIG.site.accentColor);
 }
 
-// ── Page title ────────────────────────────────────────────────────────────
-document.title = CONFIG.site.title;
-
-// ── Navbar ────────────────────────────────────────────────────────────────
-document.getElementById('nav-team-name').textContent = CONFIG.site.teamName;
-
-const navSections = [
-  { label: 'Valori',   href: '#values'   },
-  { label: 'Team',     href: '#team'     },
-  { label: 'Galleria', href: '#gallery'  },
-  { label: 'Roadmap',  href: '#roadmap'  },
-  { label: 'Merch',    href: '#merch'    },
-  { label: 'Tifosi',   href: '#fans'     },
-  { label: 'Board',    href: '#board'    },
-  { label: 'Contatti', href: '#contacts', cta: true },
-];
-
-const navLinks = document.getElementById('nav-links');
-navSections.forEach(({ label, href, cta }) => {
-  const li = el('li');
-  const a  = el('a');
-  a.href = href;
-  a.textContent = label;
-  if (cta) a.className = 'nav-cta';
-  li.appendChild(a);
-  navLinks.appendChild(li);
-});
-
-// ── Hero ──────────────────────────────────────────────────────────────────
-document.getElementById('hero-eyebrow').textContent  = CONFIG.site.eyebrow;
-document.getElementById('hero-title').textContent    = CONFIG.site.teamName;
-document.getElementById('hero-subtitle').textContent = CONFIG.site.tagline;
-
-const heroActions = document.getElementById('hero-actions');
-const { primaryBtn, secondaryBtn } = CONFIG.hero;
-heroActions.innerHTML = `
-  <a href="${primaryBtn.href}"   class="btn btn-primary">${primaryBtn.label}</a>
-  <a href="${secondaryBtn.href}" class="btn btn-outline">${secondaryBtn.label}</a>
-`;
-
-// ── Values ────────────────────────────────────────────────────────────────
-const { values } = CONFIG;
-document.getElementById('values-header').innerHTML = sectionHeader(values.tag, values.title, values.subtitle);
-
-const valuesGrid = document.getElementById('values-grid');
-values.items.forEach(({ icon, title, text }) => {
-  valuesGrid.appendChild(el('div', 'value-card', `
-    <div class="value-icon">${icon}</div>
-    <h3>${title}</h3>
-    <p>${text}</p>
-  `));
-});
-
-// ── Team ──────────────────────────────────────────────────────────────────
-const { team } = CONFIG;
-document.getElementById('team-header').innerHTML = sectionHeader(team.tag, team.title, team.subtitle);
-
-const teamGrid = document.getElementById('team-grid');
-team.players.forEach(({ number, name, role, bio, photo }) => {
-  const photoHTML = photo
-    ? `<img class="player-photo" src="${photo}" alt="${name}" loading="lazy" />`
-    : `<div class="player-photo placeholder-photo"><span>👤</span></div>`;
-
-  teamGrid.appendChild(el('div', 'player-card', `
-    ${photoHTML}
-    <div class="player-info">
-      <span class="player-number">#${number}</span>
-      <h3 class="player-name">${name}</h3>
-      <span class="player-role">${role}</span>
-      <p class="player-bio">${bio}</p>
-    </div>
-  `));
-});
-
-// ── Gallery ───────────────────────────────────────────────────────────────
-const { gallery } = CONFIG;
-document.getElementById('gallery-header').innerHTML = sectionHeader(gallery.tag, gallery.title, gallery.subtitle);
-
-const galleryGrid = document.getElementById('gallery-grid');
-
-if (gallery.photos && gallery.photos.length > 0) {
-  gallery.photos.forEach(({ src, alt, size }) => {
-    const cls = ['gallery-item', size || ''].filter(Boolean).join(' ');
-    const item = el('div', cls);
-    const img  = document.createElement('img');
-    img.src    = src;
-    img.alt    = alt || '';
-    img.loading = 'lazy';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
-    const overlay = el('div', 'gallery-overlay', `<span>${alt || ''}</span>`);
-    item.appendChild(img);
-    item.appendChild(overlay);
-    galleryGrid.appendChild(item);
-  });
-} else {
-  // Placeholder tiles with varying sizes for visual interest
-  const sizes = ['large', '', '', '', 'tall', '', ''];
-  const count  = gallery.placeholderCount || 7;
-  for (let i = 0; i < count; i++) {
-    const size = sizes[i] || '';
-    const cls  = ['gallery-item', 'placeholder-img', size].filter(Boolean).join(' ');
-    galleryGrid.appendChild(el('div', cls, `
-      <div class="gallery-overlay"><span>📸 Aggiungi foto</span></div>
-    `));
-  }
+// Hero background image
+if (CONFIG.hero.image) {
+  const bg = document.querySelector('.hero-bg');
+  bg.style.backgroundImage = `url('${CONFIG.hero.image}')`;
+  bg.classList.add('has-photo');
 }
 
-// ── Roadmap ───────────────────────────────────────────────────────────────
-const { roadmap } = CONFIG;
-document.getElementById('roadmap-header').innerHTML = sectionHeader(roadmap.tag, roadmap.title, roadmap.subtitle);
+// Gallery (photos don't change with language — only alt text does, minor)
+(function renderGallery() {
+  const { gallery } = CONFIG;
+  document.getElementById('gallery-header').innerHTML =
+    sectionHeader(gallery.tag, gallery.title, gallery.subtitle);
 
-const tabsContainer   = document.getElementById('roadmap-tabs');
-const panelsContainer = document.getElementById('roadmap-panels');
-const sides = ['left', 'right'];
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = '';
 
-roadmap.years.forEach(({ year, status, tournaments }, yearIndex) => {
-  const panelId = `roadmap-panel-${yearIndex}`;
+  if (gallery.photos && gallery.photos.length > 0) {
+    gallery.photos.forEach(({ src, alt, size }) => {
+      const cls  = ['gallery-item', size || ''].filter(Boolean).join(' ');
+      const item = el('div', cls);
+      const img  = document.createElement('img');
+      img.src    = src;
+      img.alt    = t(alt) || '';
+      img.loading = 'lazy';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+      item.appendChild(img);
+      item.appendChild(el('div', 'gallery-overlay', `<span>${t(alt) || ''}</span>`));
+      grid.appendChild(item);
+    });
+  } else {
+    const sizes = ['large', '', '', '', 'tall', '', ''];
+    for (let i = 0; i < (gallery.placeholderCount || 7); i++) {
+      const cls = ['gallery-item', 'placeholder-img', sizes[i] || ''].filter(Boolean).join(' ');
+      grid.appendChild(el('div', cls, `<div class="gallery-overlay"><span>${t(CONFIG.ui.addPhoto)}</span></div>`));
+    }
+  }
+})();
 
-  // ── Tab button ──
-  const tab = el('button', `roadmap-tab${status === 'future' ? ' future' : ''}${yearIndex === 0 ? ' active' : ''}`);
-  tab.textContent = year;
-  tab.dataset.panel = panelId;
-  tabsContainer.appendChild(tab);
+// Contact form (structure stays, only labels/placeholders update)
+document.getElementById('contact-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const feedback = document.getElementById('form-feedback');
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = t(CONFIG.ui.form.sending);
+  setTimeout(() => {
+    feedback.textContent = t(CONFIG.ui.form.success);
+    e.target.reset();
+    btn.disabled = false;
+    btn.textContent = t(CONFIG.ui.form.submit);
+  }, 1200);
+});
 
-  // ── Panel with zigzag timeline ──
-  const panel = el('div', `roadmap-panel${yearIndex === 0 ? ' visible' : ''}`);
-  panel.id = panelId;
+// ═══════════════════════════════════════════════
+// RENDER FUNCTIONS (re-run on language switch)
+// ═══════════════════════════════════════════════
 
-  const timeline = el('div', 'timeline');
+function renderNav() {
+  const { ui, site } = CONFIG;
+  document.getElementById('nav-team-name').textContent = site.teamName;
 
-  tournaments.forEach(({ name, location, result, image }, i) => {
-    const side = sides[i % 2];
-    timeline.appendChild(el('div', `timeline-item ${side}`, `
-      <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        ${image ? `<img class="tournament-img" src="${image}" alt="${name}" loading="lazy" />` : ''}
-        ${location ? `<span class="timeline-year">📍 ${location}</span>` : ''}
-        <h3>${name}</h3>
-        ${result ? `<span class="tournament-result">${result}</span>` : ''}
+  const navLinks = document.getElementById('nav-links');
+  navLinks.innerHTML = '';
+
+  const sections = [
+    { key: 'values',   href: '#values'   },
+    { key: 'team',     href: '#team'     },
+    { key: 'gallery',  href: '#gallery'  },
+    { key: 'roadmap',  href: '#roadmap'  },
+    { key: 'merch',    href: '#merch'    },
+    { key: 'fans',     href: '#fans'     },
+    { key: 'board',    href: '#board'    },
+    { key: 'contacts', href: '#contacts', cta: true },
+  ];
+
+  sections.forEach(({ key, href, cta }) => {
+    const li = el('li');
+    const a  = el('a');
+    a.href = href;
+    a.textContent = t(ui.nav[key]);
+    if (cta) a.className = 'nav-cta';
+    li.appendChild(a);
+    navLinks.appendChild(li);
+  });
+
+  // Re-attach hamburger close listeners
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+function renderHero() {
+  const { site, ui } = CONFIG;
+  document.title = site.title;
+  document.getElementById('hero-eyebrow').textContent  = t(site.eyebrow);
+  document.getElementById('hero-title').textContent    = site.teamName;
+  document.getElementById('hero-subtitle').textContent = t(site.tagline);
+  document.getElementById('hero-actions').innerHTML = `
+    <a href="#team"  class="btn btn-primary">${t(ui.hero.primary)}</a>
+    <a href="#merch" class="btn btn-outline">${t(ui.hero.secondary)}</a>
+  `;
+}
+
+function renderValues() {
+  const { values } = CONFIG;
+  document.getElementById('values-header').innerHTML = sectionHeader(values.tag, values.title, values.subtitle);
+  const grid = document.getElementById('values-grid');
+  grid.innerHTML = '';
+  values.items.forEach(({ icon, title, text }) => {
+    grid.appendChild(el('div', 'value-card', `
+      <div class="value-icon">${icon}</div>
+      <h3>${t(title)}</h3>
+      <p>${t(text)}</p>
+    `));
+  });
+}
+
+function renderTeam() {
+  const { team } = CONFIG;
+  document.getElementById('team-header').innerHTML = sectionHeader(team.tag, team.title, team.subtitle);
+  const grid = document.getElementById('team-grid');
+  grid.innerHTML = '';
+  team.players.forEach(({ number, name, role, bio, photo }) => {
+    const photoHTML = photo
+      ? `<img class="player-photo" src="${photo}" alt="${name}" loading="lazy" />`
+      : `<div class="player-photo placeholder-photo"><span>👤</span></div>`;
+    grid.appendChild(el('div', 'player-card', `
+      ${photoHTML}
+      <div class="player-info">
+        <span class="player-number">#${number}</span>
+        <h3 class="player-name">${name}</h3>
+        <span class="player-role">${t(role)}</span>
+        <p class="player-bio">${t(bio)}</p>
       </div>
     `));
   });
+}
 
-  panel.appendChild(timeline);
-  panelsContainer.appendChild(panel);
+function renderRoadmap() {
+  const { roadmap } = CONFIG;
+  document.getElementById('roadmap-header').innerHTML = sectionHeader(roadmap.tag, roadmap.title, roadmap.subtitle);
+
+  const tabsContainer   = document.getElementById('roadmap-tabs');
+  const panelsContainer = document.getElementById('roadmap-panels');
+  tabsContainer.innerHTML   = '';
+  panelsContainer.innerHTML = '';
+
+  const sides = ['left', 'right'];
+  const defaultIndex = roadmap.years.findIndex(y => y.status === 'active');
+
+  roadmap.years.forEach(({ year, status, tournaments }, yearIndex) => {
+    const panelId  = `roadmap-panel-${yearIndex}`;
+    const isDefault = yearIndex === (defaultIndex >= 0 ? defaultIndex : 0);
+
+    const tab = el('button', `roadmap-tab${status === 'future' ? ' future' : ''}${isDefault ? ' active' : ''}`);
+    tab.textContent  = year;
+    tab.dataset.panel = panelId;
+    tabsContainer.appendChild(tab);
+
+    const panel    = el('div', `roadmap-panel${isDefault ? ' visible' : ''}`);
+    panel.id       = panelId;
+    const timeline = el('div', 'timeline');
+
+    tournaments.forEach(({ name, location, result, image }, i) => {
+      timeline.appendChild(el('div', `timeline-item ${sides[i % 2]}`, `
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          ${image ? `<img class="tournament-img" src="${image}" alt="${t(name)}" loading="lazy" />` : ''}
+          ${location ? `<span class="timeline-year">📍 ${t(location)}</span>` : ''}
+          <h3>${t(name)}</h3>
+          ${result ? `<span class="tournament-result">${t(result)}</span>` : ''}
+        </div>
+      `));
+    });
+
+    panel.appendChild(timeline);
+    panelsContainer.appendChild(panel);
+  });
+
+  tabsContainer.addEventListener('click', (e) => {
+    const tab = e.target.closest('.roadmap-tab');
+    if (!tab) return;
+    tabsContainer.querySelectorAll('.roadmap-tab').forEach(t => t.classList.remove('active'));
+    panelsContainer.querySelectorAll('.roadmap-panel').forEach(p => p.classList.remove('visible'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.panel).classList.add('visible');
+  });
+}
+
+function renderFans() {
+  const { fans } = CONFIG;
+  document.getElementById('fans-header').innerHTML = sectionHeader(fans.tag, fans.title, fans.subtitle);
+  const grid = document.getElementById('fans-grid');
+  grid.innerHTML = '';
+  fans.fans.forEach(({ name, title, bio, photo }) => {
+    const photoHTML = photo
+      ? `<img class="player-photo" src="${photo}" alt="${name}" loading="lazy" />`
+      : `<div class="player-photo placeholder-photo"><span>⭐</span></div>`;
+    grid.appendChild(el('div', 'player-card', `
+      ${photoHTML}
+      <div class="player-info">
+        <span class="player-number">${t(title)}</span>
+        <h3 class="player-name">${name}</h3>
+        <p class="player-bio">${t(bio)}</p>
+      </div>
+    `));
+  });
+}
+
+function renderMerch() {
+  const { merch, ui } = CONFIG;
+  document.getElementById('merch-header').innerHTML = sectionHeader(merch.tag, merch.title, merch.subtitle);
+  document.getElementById('merch-note').textContent = t(merch.note);
+  const grid = document.getElementById('merch-grid');
+  grid.innerHTML = '';
+  merch.products.forEach(({ name, desc, price, badge, badgeStyle, image, sizes }) => {
+    const badgeHTML = badge ? `<span class="merch-badge${badgeStyle === 'new' ? ' new' : ''}">${t(badge)}</span>` : '';
+    const imgHTML   = image ? `<img src="${image}" alt="${t(name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />` : '';
+    const card = el('div', 'merch-card', `
+      <div class="merch-img placeholder-img">${imgHTML}${badgeHTML}</div>
+      <div class="merch-info">
+        <h3 class="merch-name">${t(name)}</h3>
+        <p class="merch-desc">${t(desc)}</p>
+        <span class="merch-price">${price}</span>
+        <button class="btn btn-primary btn-sm merch-buy-btn">${t(ui.buy)}</button>
+      </div>
+    `);
+    card.querySelector('.merch-buy-btn').addEventListener('click', () => {
+      openOrderModal(t(name), sizes || []);
+    });
+    grid.appendChild(card);
+  });
+}
+
+function renderBoard() {
+  const { board } = CONFIG;
+  document.getElementById('board-header').innerHTML = sectionHeader(board.tag, board.title, board.subtitle);
+  const grid = document.getElementById('board-grid');
+  grid.innerHTML = '';
+  board.members.forEach(({ name, role, bio, photo }) => {
+    const photoHTML = photo
+      ? `<img class="board-photo" src="${photo}" alt="${name}" loading="lazy" />`
+      : `<div class="board-photo board-photo-placeholder">👤</div>`;
+    grid.appendChild(el('div', 'board-card', `
+      ${photoHTML}
+      <h3 class="board-name">${name}</h3>
+      <span class="board-role">${t(role)}</span>
+      <p class="board-bio">${t(bio)}</p>
+    `));
+  });
+}
+
+function renderContacts() {
+  const { contacts, ui } = CONFIG;
+  document.getElementById('contacts-header').innerHTML = sectionHeader(contacts.tag, contacts.title, contacts.subtitle);
+
+  const contactInfo = document.getElementById('contact-info');
+  contactInfo.innerHTML = `
+    <div class="contact-item">
+      <div class="contact-icon">📧</div>
+      <div><h4>${t(ui.contact.emailLabel)}</h4><a href="mailto:${contacts.email}">${contacts.email}</a></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div><h4>${t(ui.contact.locationLabel)}</h4><p>${contacts.location}</p></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📱</div>
+      <div><h4>${t(ui.contact.phoneLabel)}</h4><a href="tel:${contacts.phone.replace(/\s/g, '')}">${contacts.phone}</a></div>
+    </div>
+  `;
+
+  const socialsDiv = el('div', 'contact-socials');
+  Object.entries(contacts.socials).forEach(([name, href]) => {
+    if (!href || !ICONS[name]) return;
+    const a = el('a', 'social-btn');
+    a.href = href;
+    a.setAttribute('aria-label', name);
+    a.innerHTML = ICONS[name];
+    socialsDiv.appendChild(a);
+  });
+  contactInfo.appendChild(socialsDiv);
+
+  // Form labels & placeholders
+  const { form } = ui;
+  document.querySelector('label[for="f-name"]').textContent    = t(form.name);
+  document.querySelector('label[for="f-email"]').textContent   = t(form.email);
+  document.querySelector('label[for="f-message"]').textContent = t(form.message);
+  document.getElementById('f-name').placeholder    = t(form.namePh);
+  document.getElementById('f-email').placeholder   = t(form.emailPh);
+  document.getElementById('f-message').placeholder = t(form.messagePh);
+  document.querySelector('#contact-form button[type="submit"]').textContent = t(form.submit);
+}
+
+function renderFooter() {
+  const { site, ui } = CONFIG;
+  document.getElementById('footer-logo').textContent = `🏉 ${site.teamName}`;
+  document.getElementById('footer-copy').textContent =
+    `© ${new Date().getFullYear()} ${site.teamName} Rugby Team. ${t(ui.footerCopy)}`;
+
+  const footerLinks = document.getElementById('footer-links');
+  footerLinks.innerHTML = '';
+  [
+    [t(ui.nav.values),   '#values'  ],
+    [t(ui.nav.team),     '#team'    ],
+    [t(ui.nav.merch),    '#merch'   ],
+    [t(ui.nav.contacts), '#contacts'],
+  ].forEach(([label, href]) => {
+    const a = el('a');
+    a.href = href;
+    a.textContent = label;
+    footerLinks.appendChild(a);
+  });
+}
+
+// ── Render everything ─────────────────────────────────────────────────────
+function renderAll() {
+  renderNav();
+  renderHero();
+  renderValues();
+  renderTeam();
+  renderRoadmap();
+  renderFans();
+  renderMerch();
+  renderBoard();
+  renderContacts();
+  renderFooter();
+  initReveal();
+}
+
+renderAll();
+
+// ═══════════════════════════════════════════════
+// ORDER MODAL
+// ═══════════════════════════════════════════════
+
+const orderModal   = document.getElementById('order-modal');
+const orderForm    = document.getElementById('order-form');
+const modalClose   = document.getElementById('modal-close');
+
+function openOrderModal(productName, sizes) {
+  const { ui } = CONFIG;
+  const ord = ui.order;
+
+  // Labels
+  document.getElementById('modal-eyebrow').textContent        = t(ord.eyebrow);
+  document.getElementById('modal-title').textContent          = productName;
+  document.getElementById('order-product').value              = productName;
+  document.getElementById('label-order-name').textContent     = t(ui.form.name);
+  document.getElementById('label-order-email').textContent    = t(ord.email);
+  document.getElementById('label-order-phone').textContent    = t(ord.phone);
+  document.getElementById('label-order-size').textContent     = t(ord.size);
+  document.getElementById('label-order-qty').textContent      = t(ord.qty);
+  document.getElementById('label-order-msg').textContent      = t(ord.msg);
+  document.getElementById('order-submit').textContent         = t(ord.submit);
+  document.getElementById('order-name').placeholder           = t(ui.form.namePh);
+  document.getElementById('order-email').placeholder          = t(ui.form.emailPh);
+  document.getElementById('order-feedback').textContent       = '';
+
+  // Sizes
+  const sizeGroup  = document.getElementById('size-group');
+  const sizeSelect = document.getElementById('order-size');
+  sizeSelect.innerHTML = '';
+  if (sizes.length > 0) {
+    sizes.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      sizeSelect.appendChild(opt);
+    });
+    sizeGroup.style.display = '';
+  } else {
+    sizeGroup.style.display = 'none';
+  }
+
+  orderModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('order-name').focus();
+}
+
+function closeOrderModal() {
+  orderModal.classList.remove('open');
+  document.body.style.overflow = '';
+  orderForm.reset();
+}
+
+modalClose.addEventListener('click', closeOrderModal);
+orderModal.addEventListener('click', (e) => { if (e.target === orderModal) closeOrderModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeOrderModal(); });
+
+orderForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const { merch, ui } = CONFIG;
+  const btn      = document.getElementById('order-submit');
+  const feedback = document.getElementById('order-feedback');
+
+  btn.disabled    = true;
+  btn.textContent = t(ui.order.sending);
+
+  try {
+    const res = await fetch(merch.orderEndpoint, {
+      method:  'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(orderForm))),
+    });
+
+    if (res.ok) {
+      feedback.style.color = 'var(--green)';
+      feedback.textContent = t(ui.order.success);
+      orderForm.reset();
+      setTimeout(closeOrderModal, 2500);
+    } else {
+      throw new Error();
+    }
+  } catch {
+    feedback.style.color = '#e05555';
+    feedback.textContent = t(ui.order.error);
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = t(ui.order.submit);
+  }
 });
 
-// ── Tab switching ──
-tabsContainer.addEventListener('click', (e) => {
-  const tab = e.target.closest('.roadmap-tab');
-  if (!tab) return;
+// ═══════════════════════════════════════════════
+// LANGUAGE TOGGLE
+// ═══════════════════════════════════════════════
 
-  tabsContainer.querySelectorAll('.roadmap-tab').forEach(t => t.classList.remove('active'));
-  panelsContainer.querySelectorAll('.roadmap-panel').forEach(p => p.classList.remove('visible'));
+// Inject toggle button into navbar
+const langBtn = el('button', 'lang-toggle', lang === 'it' ? 'EN' : 'IT');
+langBtn.setAttribute('aria-label', 'Switch language');
+document.querySelector('.nav-inner').appendChild(langBtn);
 
-  tab.classList.add('active');
-  document.getElementById(tab.dataset.panel).classList.add('visible');
-});
-
-// ── Fans ──────────────────────────────────────────────────────────────────
-const { fans } = CONFIG;
-document.getElementById('fans-header').innerHTML = sectionHeader(fans.tag, fans.title, fans.subtitle);
-
-const fansGrid = document.getElementById('fans-grid');
-fans.fans.forEach(({ name, title, bio, photo }) => {
-  const photoHTML = photo
-    ? `<img class="player-photo" src="${photo}" alt="${name}" loading="lazy" />`
-    : `<div class="player-photo placeholder-photo"><span>⭐</span></div>`;
-
-  fansGrid.appendChild(el('div', 'player-card', `
-    ${photoHTML}
-    <div class="player-info">
-      <span class="player-number">${title}</span>
-      <h3 class="player-name">${name}</h3>
-      <p class="player-bio">${bio}</p>
-    </div>
-  `));
-});
-
-// ── Merch ─────────────────────────────────────────────────────────────────
-const { merch } = CONFIG;
-document.getElementById('merch-header').innerHTML = sectionHeader(merch.tag, merch.title, merch.subtitle);
-document.getElementById('merch-note').textContent  = merch.note;
-
-const merchGrid = document.getElementById('merch-grid');
-merch.products.forEach(({ name, desc, price, badge, badgeStyle, image }) => {
-  const badgeHTML = badge
-    ? `<span class="merch-badge${badgeStyle === 'new' ? ' new' : ''}">${badge}</span>`
-    : '';
-  const imgHTML = image
-    ? `<img src="${image}" alt="${name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />`
-    : '';
-
-  merchGrid.appendChild(el('div', 'merch-card', `
-    <div class="merch-img placeholder-img">
-      ${imgHTML}${badgeHTML}
-    </div>
-    <div class="merch-info">
-      <h3 class="merch-name">${name}</h3>
-      <p class="merch-desc">${desc}</p>
-      <span class="merch-price">${price}</span>
-      <button class="btn btn-primary btn-sm" disabled>Coming Soon</button>
-    </div>
-  `));
-});
-
-// ── Holy Board ────────────────────────────────────────────────────────────
-const { board } = CONFIG;
-document.getElementById('board-header').innerHTML = sectionHeader(board.tag, board.title, board.subtitle);
-
-const boardGrid = document.getElementById('board-grid');
-board.members.forEach(({ name, role, bio, photo }) => {
-  const photoHTML = photo
-    ? `<img class="board-photo" src="${photo}" alt="${name}" loading="lazy" />`
-    : `<div class="board-photo board-photo-placeholder">👤</div>`;
-
-  boardGrid.appendChild(el('div', 'board-card', `
-    ${photoHTML}
-    <h3 class="board-name">${name}</h3>
-    <span class="board-role">${role}</span>
-    <p class="board-bio">${bio}</p>
-  `));
-});
-
-// ── Contacts ──────────────────────────────────────────────────────────────
-const { contacts } = CONFIG;
-document.getElementById('contacts-header').innerHTML = sectionHeader(contacts.tag, contacts.title, contacts.subtitle);
-
-const contactInfo = document.getElementById('contact-info');
-contactInfo.innerHTML = `
-  <div class="contact-item">
-    <div class="contact-icon">📧</div>
-    <div>
-      <h4>Email</h4>
-      <a href="mailto:${contacts.email}">${contacts.email}</a>
-    </div>
-  </div>
-  <div class="contact-item">
-    <div class="contact-icon">📍</div>
-    <div>
-      <h4>Dove giochiamo</h4>
-      <p>${contacts.location}</p>
-    </div>
-  </div>
-  <div class="contact-item">
-    <div class="contact-icon">📱</div>
-    <div>
-      <h4>Telefono</h4>
-      <a href="tel:${contacts.phone.replace(/\s/g, '')}">${contacts.phone}</a>
-    </div>
-  </div>
-`;
-
-// Social buttons
-const socialsDiv = el('div', 'contact-socials');
-Object.entries(contacts.socials).forEach(([name, href]) => {
-  if (!href || !ICONS[name]) return;
-  const a = el('a', 'social-btn');
-  a.href = href;
-  a.setAttribute('aria-label', name.charAt(0).toUpperCase() + name.slice(1));
-  a.innerHTML = ICONS[name];
-  socialsDiv.appendChild(a);
-});
-contactInfo.appendChild(socialsDiv);
-
-// ── Footer ────────────────────────────────────────────────────────────────
-document.getElementById('footer-logo').textContent = `🏉 ${CONFIG.site.teamName}`;
-document.getElementById('footer-copy').textContent = `© ${new Date().getFullYear()} ${CONFIG.site.teamName} Rugby Team. Tutti i diritti riservati.`;
-
-const footerLinks = document.getElementById('footer-links');
-[['Valori','#values'],['Team','#team'],['Merch','#merch'],['Contatti','#contacts']].forEach(([label, href]) => {
-  const a = el('a');
-  a.href = href;
-  a.textContent = label;
-  footerLinks.appendChild(a);
+langBtn.addEventListener('click', () => {
+  lang = lang === 'it' ? 'en' : 'it';
+  localStorage.setItem('discepoli-lang', lang);
+  langBtn.textContent = lang === 'it' ? 'EN' : 'IT';
+  renderAll();
 });
 
 // ═══════════════════════════════════════════════
@@ -321,76 +505,43 @@ window.addEventListener('scroll', () => {
 // ── Hamburger menu ────────────────────────────
 const hamburger = document.getElementById('hamburger');
 hamburger.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('open');
+  const navLinks = document.getElementById('nav-links');
+  const isOpen   = navLinks.classList.toggle('open');
   hamburger.setAttribute('aria-expanded', isOpen);
   document.body.style.overflow = isOpen ? 'hidden' : '';
 });
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-});
 
 // ── Scroll-reveal ─────────────────────────────
-const revealTargets = [
-  '.value-card', '.player-card', '.gallery-item',
-  '.timeline-item', '.merch-card', '.contact-item',
-  '.contact-form', '.section-header',
-];
-document.querySelectorAll(revealTargets.join(',')).forEach(el => {
-  el.setAttribute('data-reveal', '');
-});
-
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const siblings = [...entry.target.parentElement.querySelectorAll('[data-reveal]:not(.visible)')];
-    const delay    = siblings.indexOf(entry.target) * 80;
-    setTimeout(() => entry.target.classList.add('visible'), delay);
-    revealObserver.unobserve(entry.target);
+function initReveal() {
+  const targets = [
+    '.value-card', '.player-card', '.gallery-item',
+    '.timeline-item', '.merch-card', '.contact-item',
+    '.contact-form', '.section-header', '.board-card',
+  ];
+  document.querySelectorAll(targets.join(',')).forEach(node => {
+    node.setAttribute('data-reveal', '');
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const siblings = [...entry.target.parentElement.querySelectorAll('[data-reveal]:not(.visible)')];
+      setTimeout(() => entry.target.classList.add('visible'), siblings.indexOf(entry.target) * 80);
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('[data-reveal]').forEach(node => observer.observe(node));
+}
 
 // ── Active nav highlighting ───────────────────
-const allSections  = document.querySelectorAll('section[id]');
-const allNavAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
-
-new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    allNavAnchors.forEach(a => a.classList.remove('active'));
-    const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-    if (active) active.classList.add('active');
-  });
-}, { threshold: 0.4 }).observe(...allSections);
-
-allSections.forEach(s => {
+document.querySelectorAll('section[id]').forEach(section => {
   new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      allNavAnchors.forEach(a => a.classList.remove('active'));
+      document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => a.classList.remove('active'));
       const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
       if (active) active.classList.add('active');
     });
-  }, { threshold: 0.4 }).observe(s);
-});
-
-// ── Contact form ──────────────────────────────
-document.getElementById('contact-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const feedback = document.getElementById('form-feedback');
-  const btn      = e.target.querySelector('button[type="submit"]');
-  btn.disabled   = true;
-  btn.textContent = 'Invio in corso…';
-
-  // Replace the setTimeout below with a real fetch() to Formspree or your backend
-  setTimeout(() => {
-    feedback.textContent = '✓ Messaggio inviato! Ti risponderemo presto.';
-    e.target.reset();
-    btn.disabled    = false;
-    btn.textContent = 'Invia messaggio';
-  }, 1200);
+  }, { threshold: 0.4 }).observe(section);
 });
