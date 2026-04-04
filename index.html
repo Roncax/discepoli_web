@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loading…</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navbar shell — content injected by script.js -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="logo" id="nav-logo">
+        <span class="logo-icon">🏉</span>
+        <span class="logo-text" id="nav-team-name"></span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links"></ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="hero-eyebrow"></p>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-subtitle" id="hero-subtitle"></p>
+      <div class="hero-actions" id="hero-actions"></div>
+    </div>
+    <a href="#values" class="scroll-indicator" aria-label="Scorri">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- Values -->
+  <section class="section" id="values">
+    <div class="container">
+      <div class="section-header" id="values-header"></div>
+      <div class="values-grid" id="values-grid"></div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section section-dark" id="team">
+    <div class="container">
+      <div class="section-header" id="team-header"></div>
+      <div class="team-grid" id="team-grid"></div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="section-header" id="gallery-header"></div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="section section-dark" id="roadmap">
+    <div class="container">
+      <div class="section-header" id="roadmap-header"></div>
+      <div class="roadmap-tabs" id="roadmap-tabs"></div>
+      <div id="roadmap-panels"></div>
+    </div>
+  </section>
+
+  <!-- Merch -->
+  <section class="section" id="merch">
+    <div class="container">
+      <div class="section-header" id="merch-header"></div>
+      <div class="merch-grid" id="merch-grid"></div>
+      <p class="merch-note" id="merch-note"></p>
+    </div>
+  </section>
+
+  <!-- Best Fans -->
+  <section class="section" id="fans">
+    <div class="container">
+      <div class="section-header" id="fans-header"></div>
+      <div class="team-grid" id="fans-grid"></div>
+    </div>
+  </section>
+
+  <!-- Contacts -->
+  <section class="section section-dark" id="contacts">
+    <div class="container">
+      <div class="section-header" id="contacts-header"></div>
+      <div class="contacts-layout">
+        <div class="contact-info" id="contact-info"></div>
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="f-name">Nome</label>
+            <input type="text" id="f-name" name="name" placeholder="Il tuo nome" required />
+          </div>
+          <div class="form-group">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" name="email" placeholder="la@tua.email" required />
+          </div>
+          <div class="form-group">
+            <label for="f-message">Messaggio</label>
+            <textarea id="f-message" name="message" rows="5" placeholder="Scrivi qui..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Invia messaggio</button>
+          <p class="form-feedback" id="form-feedback"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-logo" id="footer-logo"></p>
+        <p class="footer-copy" id="footer-copy"></p>
+        <div class="footer-links" id="footer-links"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
