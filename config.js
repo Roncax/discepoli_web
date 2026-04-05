@@ -24,6 +24,8 @@ const CONFIG = {
         { it: "una squadra di rugby", en: "a rugby team" },
         { it: "un culto", en: "a cult" },
         { it: "i migliori in città", en: "the best in town" },
+        { it: "dei cavalli", en: "dei cavalli" },
+        { it: "in cerca di Fendu", en: "in cerca di Fendu" },
       ],
     },
   },
@@ -89,6 +91,28 @@ const CONFIG = {
         it: "Errore nell'invio. Riprova o scrivici direttamente.",
         en: "Send error. Retry or contact us directly.",
       },
+      payment: { it: "Metodo di pagamento", en: "Payment method" },
+      paymentPaypal: { it: "PayPal", en: "PayPal" },
+      paymentIban: { it: "Bonifico bancario", en: "Bank transfer" },
+      summary: { it: "Riepilogo ordine", en: "Order summary" },
+      summaryProduct: { it: "Prodotto", en: "Product" },
+      summarySize: { it: "Taglia", en: "Size" },
+      summaryQty: { it: "Quantità", en: "Quantity" },
+      summaryPayment: { it: "Pagamento", en: "Payment" },
+      back: { it: "← Modifica", en: "← Edit" },
+      next: { it: "Riepilogo →", en: "Summary →" },
+      paymentDetails: {
+        it: "Istruzioni di pagamento",
+        en: "Payment instructions",
+      },
+      paypalBtn: { it: "Paga con PayPal →", en: "Pay with PayPal →" },
+      ibanHolder: { it: "Intestatario", en: "Account holder" },
+      ibanBank: { it: "Banca", en: "Bank" },
+      ibanCode: { it: "IBAN", en: "IBAN" },
+      confirmEmail: {
+        it: "Controlla la tua email per la conferma.",
+        en: "Check your email for confirmation.",
+      },
     },
     footerCopy: {
       it: "Tutti i diritti riservati.",
@@ -99,8 +123,11 @@ const CONFIG = {
       it: "Vedi tutto su Drive →",
       en: "View all on Drive →",
     },
-    availabilityOut:     { it: "Fuori produzione",       en: "OUT of production"              },
-    availabilityOnSight: { it: "Disponibile quando ci vedi", en: "Available whenever you see us" },
+    availabilityOut: { it: "Fuori produzione", en: "OUT of production" },
+    availabilityOnSight: {
+      it: "Cercaci ai Tornei!",
+      en: "Look for us at the tournaments!",
+    },
   },
 
   // ── Hero ─────────────────────────────────────────────
@@ -127,7 +154,10 @@ const CONFIG = {
       },
       {
         icon: "🍺",
-        title: { it: "Il Terzo Tempo è Sacro", en: "The After-Match is Sacred" },
+        title: {
+          it: "Il Terzo Tempo è Sacro",
+          en: "The After-Match is Sacred",
+        },
         text: {
           it: "La partita finisce al fischio. Il terzo tempo non finisce mai. Chi lascia prima del secondo giro è un eretico e verrà giudicato.",
           en: "The game ends at the whistle. The after-match never ends. Those who leave before the second round are heretics and shall be judged.",
@@ -492,7 +522,7 @@ const CONFIG = {
     // size: "large" (2×2), "tall" (1×2), or omit for normal
     photos: [
       {
-        src: "https://picsum.photos/seed/gal1/800/600",
+        src: "https://drive.google.com/uc?export=view&id=1TOKJk6bYvinFZdixx05rco2ZyeotR2VE",
         alt: { it: "Partita 2025", en: "Match 2025" },
         size: "large",
       },
@@ -624,7 +654,11 @@ const CONFIG = {
         year: "2024",
         status: "past",
         tournaments: [
-          { name: { it: "MRF", en: "MRF" }, location: "31/05-02/06" },
+          {
+            name: { it: "MRF", en: "MRF" },
+            location: "31/05-02/06",
+            image: "https://picsum.photos/seed/mrf2024/600/300",
+          },
           {
             name: { it: "Arena Sevens", en: "Arena Sevens" },
             location: "08/06",
@@ -636,14 +670,17 @@ const CONFIG = {
           {
             name: { it: "L'aia Beach", en: "L'aia Beach" },
             location: "22-23/06 🇳🇱",
+            image: "https://picsum.photos/seed/laia2024/600/300",
           },
           {
             name: { it: "Grigliata Ottiglio", en: "Grigliata Ottiglio" },
             location: "29-30/06",
+            image: "https://picsum.photos/seed/ottiglio2024/600/300",
           },
           {
             name: { it: "Tolosa Water Touch", en: "Tolosa Water Touch" },
             location: "06-07/07 🇫🇷",
+            image: "https://picsum.photos/seed/tolosa2024/600/300",
           },
           {
             name: { it: "Alpago Beach", en: "Alpago Beach" },
@@ -665,12 +702,17 @@ const CONFIG = {
           {
             name: { it: "Snow Rugby", en: "Snow Rugby" },
             location: "11-12/01",
+            image: "https://picsum.photos/seed/snow2025/600/300",
           },
           {
             name: { it: "Noceto Touch", en: "Noceto Touch" },
             location: "24-25/05",
           },
-          { name: { it: "MRF", en: "MRF" }, location: "31/05-01/06" },
+          {
+            name: { it: "MRF", en: "MRF" },
+            location: "31/05-01/06",
+            image: "https://picsum.photos/seed/mrf2025/600/300",
+          },
           {
             name: {
               it: "Torneo Città di Rovato",
@@ -686,14 +728,17 @@ const CONFIG = {
           {
             name: { it: "Grigliata Ottiglio", en: "Grigliata Ottiglio" },
             location: "28/06",
+            image: "https://picsum.photos/seed/ottiglio2025/600/300",
           },
           {
             name: { it: "Alpago Beach", en: "Alpago Beach" },
             location: "12-13/07",
+            image: "https://picsum.photos/seed/alpago2025/600/300",
           },
           {
             name: { it: "Cheltenham 7's", en: "Cheltenham 7's" },
             location: "18-19/07 🇬🇧",
+            image: "https://picsum.photos/seed/cheltenham2025/600/300",
           },
         ],
       },
@@ -908,20 +953,15 @@ const CONFIG = {
       it: "Indossa i colori dei Discepoli. Essere parte della famiglia non è solo in campo.",
       en: "Wear the Discepoli colours. Being part of the family goes beyond the pitch.",
     },
-    // ↓ Get this URL from formspree.io after creating a free form pointed at discepoliteam@gmail.com
-    orderEndpoint: "https://formspree.io/f/mreookwb",
-    products: [
-      {
-        name: { it: "Maglietta", en: "T-Shirt" },
-        desc: {
-          it: "La classica maglietta dei Discepoli. Cotone morbido, logo stampato, da indossare sempre.",
-          en: "The classic Discepoli tee. Soft cotton, printed logo, wear it everywhere.",
-        },
-        price: "€ 10,00",
-        sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "photos/merch/kit_2024_front.png",
-        availability: "on-sight",
+    orderEndpoint: "https://formsubmit.co/discepoliteam@gmail.com",
+    payment: {
+      iban: {
+        holder: "Giacomo Pozzi",
+        iban: "IT24P36772223000EM000295137",
       },
+      paypal: "https://www.paypal.com/paypalme/idiscepoli",
+    },
+    products: [
       {
         name: { it: "Divisa (2024)", en: "Kit (2024)" },
         desc: {
@@ -929,9 +969,62 @@ const CONFIG = {
           en: "The official 2024 season kit. Technical fabric, team colours, guaranteed heaven.",
         },
         price: "€ 45,00",
-        sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+        sizes: ["S", "M", "L", "XL", "XXL", "3XL"],
         badge: { it: "Bestseller", en: "Bestseller" },
-        image: "photos/merch/kit_2024_front.png",
+        images: ["photos/merch/kit_2024_front.png"],
+      },
+      {
+        name: { it: "Maglietta", en: "T-Shirt" },
+        desc: {
+          it: "La classica maglietta dei Discepoli. Cotone morbido, logo stampato, da indossare sempre.",
+          en: "The classic Discepoli tee. Soft cotton, printed logo, wear it everywhere.",
+        },
+        price: "€ 10,00",
+        sizes: ["S", "M", "L", "XL", "XXL", "3XL"],
+        images: ["photos/merch/maglietta.png"],
+      },
+      {
+        name: { it: "Cappellino", en: "Cap" },
+        desc: {
+          it: "Il logo dei Discepoli ricamato su cappellino snapback. Stile da campioni.",
+          en: "The Discepoli logo embroidered on a snapback cap. Champions' style.",
+        },
+        sizes: ["Unica"],
+        images: ["photos/merch/cap.png"],
+        price: "€ 24,00",
+      },
+
+      {
+        name: { it: "Canotta", en: "Vest" },
+        desc: {
+          it: "Canotta tecnica per gli allenamenti estivi. Fresca, leggera, con il logo sul petto.",
+          en: "Technical vest for summer training. Cool, light, with the logo on the chest.",
+        },
+        badge: { it: "Nuovo", en: "New" },
+        badgeStyle: "new",
+        price: "€ 30,00",
+        sizes: ["S", "M", "L", "XL", "XXL", "3XL"],
+        images: ["photos/merch/canotta.png"],
+      },
+      {
+        name: { it: "Santini", en: "Holy Card" },
+        desc: {
+          it: "Un santino da tenere nel portafoglio. Per i veri credenti.",
+          en: "A holy card to keep in your wallet. For the true believers.",
+        },
+        sizes: ["Unica"],
+        images: ["photos/merch/santino.jpeg"],
+        availability: "on-sight",
+      },
+      {
+        name: { it: "Sticker", en: "Sticker" },
+        desc: {
+          it: "Adesivi ufficiali dei Discepoli. Attaccarli ovunque è obbligatorio per statuto.",
+          en: "Official Discepoli stickers. Sticking them everywhere is mandatory by statute.",
+        },
+        sizes: ["Unica"],
+        images: ["photos/merch/sticker.jpeg"],
+        availability: "on-sight",
       },
       {
         name: { it: "Pantaloncini", en: "Shorts" },
@@ -940,55 +1033,9 @@ const CONFIG = {
           en: "Match shorts to pair with the kit. Lightweight and heretic-resistant.",
         },
         price: "€ 15,00",
-        sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "photos/merch/kit_2024_front.png",
+        sizes: ["S", "M", "L", "XL", "XXL", "3XL"],
+        images: ["photos/merch/pantaloncini.png"],
         availability: "out",
-      },
-      {
-        name: { it: "Cappellino", en: "Cap" },
-        desc: {
-          it: "Il logo dei Discepoli ricamato su cappellino snapback. Stile da campioni.",
-          en: "The Discepoli logo embroidered on a snapback cap. Champions' style.",
-        },
-        price: "€ 18,00",
-        sizes: ["Unica"],
-        badge: { it: "Nuovo", en: "New" },
-        badgeStyle: "new",
-        image: "photos/merch/cap_front.png",
-        availability: "on-sight",
-      },
-      {
-        name: { it: "Canotta", en: "Vest" },
-        desc: {
-          it: "Canotta tecnica per gli allenamenti estivi. Fresca, leggera, con il logo sul petto.",
-          en: "Technical vest for summer training. Cool, light, with the logo on the chest.",
-        },
-        price: "€ 22,00",
-        sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "photos/merch/kit_2024_front.png",
-        availability: "on-sight",
-      },
-      {
-        name: { it: "Santini", en: "Holy Card" },
-        desc: {
-          it: "Per i Discepoli che pedalano. Santino ufficiale per chi vuole soffrire anche in bici.",
-          en: "For the Discepoli who cycle. Official cycling top for those who like to suffer.",
-        },
-        price: "Un abbraccio",
-        sizes: ["Unica"],
-        image: "photos/merch/kit_2024_front.png",
-        availability: "out",
-      },
-      {
-        name: { it: "Sticker", en: "Sticker" },
-        desc: {
-          it: "Adesivi ufficiali dei Discepoli. Attaccarli ovunque è obbligatorio per statuto.",
-          en: "Official Discepoli stickers. Sticking them everywhere is mandatory by statute.",
-        },
-        price: "Un backflip",
-        sizes: [],
-        image: "photos/merch/kit_2024_front.png",
-        availability: "on-sight",
       },
     ],
   },
@@ -1001,7 +1048,7 @@ const CONFIG = {
       it: "Vuoi unirti? Vuoi sfidarci? Vuoi solo mandarci un saluto? Siamo qui.",
       en: "Want to join? Want to challenge us? Just want to say hi? We're here.",
     },
-    email: "discepoliteam@gmail.it",
+    email: "discepoliteam@gmail.com",
     phone: "+39 366 3586183",
     location: "Paradiso, Ovunque",
     socials: {

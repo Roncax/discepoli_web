@@ -80,6 +80,7 @@ if (CONFIG.hero.image) {
       img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
       item.appendChild(img);
       item.appendChild(el('div', 'gallery-overlay', `<span>${t(alt) || ''}</span>`));
+      item.addEventListener('click', () => openLightbox(src, t(alt) || ''));
       grid.appendChild(item);
     });
   } else {
@@ -129,6 +130,8 @@ function renderNav() {
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = '';
     });
   });
@@ -261,6 +264,11 @@ function renderRoadmap() {
     panelsContainer.appendChild(panel);
   });
 
+  panelsContainer.addEventListener('click', (e) => {
+    const img = e.target.closest('.tournament-img');
+    if (img) openLightbox(img.src, img.alt);
+  });
+
   tabsContainer.addEventListener('click', (e) => {
     const tab = e.target.closest('.roadmap-tab');
     if (!tab) return;
@@ -313,12 +321,13 @@ function renderMerch() {
   document.getElementById('merch-header').innerHTML = sectionHeader(merch.tag, merch.title, merch.subtitle);
 const grid = document.getElementById('merch-grid');
   grid.innerHTML = '';
-  merch.products.forEach(({ name, desc, price, badge, badgeStyle, image, sizes, availability }) => {
+  merch.products.forEach(({ name, desc, price, badge, badgeStyle, images, sizes, availability }) => {
     const isOut     = availability === 'out';
     const isOnSight = availability === 'on-sight';
     const outBadge  = isOut ? `<span class="merch-badge out">${t(ui.availabilityOut)}</span>` : '';
     const badgeHTML = badge ? `<span class="merch-badge${badgeStyle === 'new' ? ' new' : ''}">${t(badge)}</span>` : '';
-    const imgHTML   = image ? `<img src="${image}" alt="${t(name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />` : '';
+    const firstImg  = images && images.length > 0 ? images[0] : null;
+    const imgHTML   = firstImg ? `<img src="${firstImg}" alt="${t(name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />` : '';
     const priceHTML = isOnSight
       ? `<span class="merch-availability on-sight">${t(ui.availabilityOnSight)}</span>`
       : `<span class="merch-price">${price}</span>`;
@@ -334,7 +343,7 @@ const grid = document.getElementById('merch-grid');
     `);
     if (!btnDisabled) {
       card.querySelector('.merch-buy-btn').addEventListener('click', () => {
-        openOrderModal(t(name), sizes || []);
+        openOrderModal(t(name), sizes || [], images || []);
       });
     }
     grid.appendChild(card);
@@ -368,9 +377,7 @@ function renderContacts() {
   }
 
   const items = [
-    { icon: '📧', label: t(ui.contact.emailLabel),    html: `<a href="mailto:${contacts.email}">${contacts.email}</a>` },
-    { icon: '📱', label: t(ui.contact.phoneLabel),    html: `<a href="tel:${contacts.phone.replace(/\s/g, '')}">${contacts.phone}</a>` },
-    { icon: '📍', label: t(ui.contact.locationLabel), html: `<p>${contacts.location}</p>` },
+    { icon: '📧', label: t(ui.contact.emailLabel), html: `<a href="mailto:${contacts.email}">${contacts.email}</a>` },
   ];
 
   if (contacts.socials.instagram) {
@@ -378,9 +385,6 @@ function renderContacts() {
   }
   if (contacts.socials.facebook) {
     items.push({ icon: '👥', label: t(ui.contact.facebookLabel), html: `<a href="${contacts.socials.facebook}" target="_blank" rel="noopener">${socialHandle(contacts.socials.facebook)}</a>` });
-  }
-  if (contacts.socials.linktree) {
-    items.push({ icon: '🌿', label: t(ui.contact.linktreeLabel), html: `<a href="${contacts.socials.linktree}" target="_blank" rel="noopener">${socialHandle(contacts.socials.linktree)}</a>` });
   }
 
   const contactInfo = document.getElementById('contact-info');
@@ -433,47 +437,107 @@ function renderAll() {
 renderAll();
 
 // ═══════════════════════════════════════════════
+// LIGHTBOX
+// ═══════════════════════════════════════════════
+
+const lightbox      = document.getElementById('lightbox');
+const lightboxImg   = document.getElementById('lightbox-img');
+const lightboxClose = document.getElementById('lightbox-close');
+
+function openLightbox(src, alt) {
+  lightboxImg.src = src;
+  lightboxImg.alt = alt || '';
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+// ═══════════════════════════════════════════════
 // ORDER MODAL
 // ═══════════════════════════════════════════════
 
-const orderModal   = document.getElementById('order-modal');
-const orderForm    = document.getElementById('order-form');
-const modalClose   = document.getElementById('modal-close');
+const orderModal = document.getElementById('order-modal');
+const orderForm  = document.getElementById('order-form');
+const modalClose = document.getElementById('modal-close');
 
-function openOrderModal(productName, sizes) {
-  const { ui } = CONFIG;
+function openOrderModal(productName, sizes, images) {
+  const { ui, merch } = CONFIG;
   const ord = ui.order;
 
+  // Image strip
+  const modalImages = document.getElementById('modal-images');
+  const mainImg     = document.getElementById('modal-img-main');
+  const thumbsEl    = document.getElementById('modal-img-thumbs');
+  thumbsEl.innerHTML = '';
+  if (images && images.length > 0) {
+    mainImg.src = images[0];
+    mainImg.alt = productName;
+    modalImages.style.display = '';
+    if (images.length > 1) {
+      images.forEach((src, i) => {
+        const thumb = document.createElement('img');
+        thumb.src       = src;
+        thumb.className = 'modal-img-thumb' + (i === 0 ? ' active' : '');
+        thumb.addEventListener('click', () => {
+          mainImg.src = src;
+          thumbsEl.querySelectorAll('.modal-img-thumb').forEach(th => th.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+        thumbsEl.appendChild(thumb);
+      });
+    }
+  } else {
+    modalImages.style.display = 'none';
+  }
+
   // Labels
-  document.getElementById('modal-eyebrow').textContent        = t(ord.eyebrow);
-  document.getElementById('modal-title').textContent          = productName;
-  document.getElementById('order-product').value              = productName;
-  document.getElementById('label-order-name').textContent     = t(ui.form.name);
-  document.getElementById('label-order-email').textContent    = t(ord.email);
-  document.getElementById('label-order-phone').textContent    = t(ord.phone);
-  document.getElementById('label-order-size').textContent     = t(ord.size);
-  document.getElementById('label-order-qty').textContent      = t(ord.qty);
-  document.getElementById('label-order-msg').textContent      = t(ord.msg);
-  document.getElementById('order-submit').textContent         = t(ord.submit);
-  document.getElementById('order-name').placeholder           = t(ui.form.namePh);
-  document.getElementById('order-email').placeholder          = t(ui.form.emailPh);
-  document.getElementById('order-feedback').textContent       = '';
+  document.getElementById('modal-eyebrow').textContent    = t(ord.eyebrow);
+  document.getElementById('modal-title').textContent      = productName;
+  document.getElementById('order-product').value          = productName;
+  document.getElementById('order-subject').value          = 'Nuovo ordine: ' + productName;
+  document.getElementById('label-order-name').textContent = t(ui.form.name);
+  document.getElementById('label-order-email').textContent = t(ord.email);
+  document.getElementById('label-order-phone').textContent = t(ord.phone);
+  document.getElementById('label-order-size').textContent  = t(ord.size);
+  document.getElementById('label-order-qty').textContent   = t(ord.qty);
+  document.getElementById('label-order-msg').textContent   = t(ord.msg);
+  document.getElementById('label-order-payment').textContent = t(ord.payment);
+  document.getElementById('label-paypal').textContent      = t(ord.paymentPaypal);
+  document.getElementById('label-iban').textContent        = t(ord.paymentIban);
+  document.getElementById('order-next').textContent        = t(ord.next);
+  document.getElementById('order-back').textContent        = t(ord.back);
+  document.getElementById('order-submit').textContent      = t(ord.submit);
+  document.getElementById('order-name').placeholder        = t(ui.form.namePh);
+  document.getElementById('order-email').placeholder       = t(ui.form.emailPh);
+  document.getElementById('order-feedback').textContent    = '';
 
   // Sizes
   const sizeGroup  = document.getElementById('size-group');
   const sizeSelect = document.getElementById('order-size');
   sizeSelect.innerHTML = '';
-  if (sizes.length > 0) {
+  if (sizes && sizes.length > 0) {
     sizes.forEach(s => {
       const opt = document.createElement('option');
-      opt.value = s;
-      opt.textContent = s;
+      opt.value = s; opt.textContent = s;
       sizeSelect.appendChild(opt);
     });
     sizeGroup.style.display = '';
   } else {
     sizeGroup.style.display = 'none';
   }
+
+  // Reset to step 1
+  document.getElementById('modal-step-1').style.display = '';
+  document.getElementById('modal-step-2').style.display = 'none';
+  orderForm.reset();
 
   orderModal.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -483,21 +547,72 @@ function openOrderModal(productName, sizes) {
 function closeOrderModal() {
   orderModal.classList.remove('open');
   document.body.style.overflow = '';
-  orderForm.reset();
 }
 
-modalClose.addEventListener('click', closeOrderModal);
-orderModal.addEventListener('click', (e) => { if (e.target === orderModal) closeOrderModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeOrderModal(); });
-
-orderForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+function renderPaymentInstructions(method) {
   const { merch, ui } = CONFIG;
+  const ord = ui.order;
+  const el  = document.getElementById('payment-instructions');
+  if (method === 'paypal') {
+    el.innerHTML = `
+      <h4>${t(ord.paymentDetails)}</h4>
+      <a class="paypal-link" href="${merch.payment.paypal}" target="_blank" rel="noopener">${t(ord.paypalBtn)}</a>
+    `;
+  } else {
+    const p = merch.payment.iban;
+    el.innerHTML = `
+      <h4>${t(ord.paymentDetails)}</h4>
+      <div class="iban-row"><span class="iban-label">${t(ord.ibanHolder)}</span><span>${p.holder}</span></div>
+      <div class="iban-row"><span class="iban-label">${t(ord.ibanBank)}</span><span>${p.bank}</span></div>
+      <div class="iban-row"><span class="iban-label">${t(ord.ibanCode)}</span><span>${p.iban}</span></div>
+    `;
+  }
+}
+
+// Step navigation
+document.getElementById('order-next').addEventListener('click', () => {
+  if (!orderForm.reportValidity()) return;
+  const { ui } = CONFIG;
+  const ord     = ui.order;
+  const data    = Object.fromEntries(new FormData(orderForm));
+  const method  = data.payment_method;
+  const size    = data.size;
+  const qty     = data.quantity;
+
+  // Update _replyto from email field
+  document.getElementById('order-replyto').value = data.email || '';
+
+  // Build summary
+  const summaryEl = document.getElementById('order-summary');
+  const rows = [
+    [t(ord.summaryProduct), data.product],
+    size ? [t(ord.summarySize), size] : null,
+    [t(ord.summaryQty), qty],
+    [t(ord.summaryPayment), method === 'paypal' ? t(ord.paymentPaypal) : t(ord.paymentIban)],
+  ].filter(Boolean);
+  summaryEl.innerHTML = `<h4>${t(ord.summary)}</h4>` +
+    rows.map(([label, val]) => `<div class="summary-row"><span class="summary-label">${label}</span><span>${val}</span></div>`).join('');
+
+  renderPaymentInstructions(method);
+
+  document.getElementById('modal-step-1').style.display = 'none';
+  document.getElementById('modal-step-2').style.display = '';
+});
+
+document.getElementById('order-back').addEventListener('click', () => {
+  document.getElementById('modal-step-1').style.display = '';
+  document.getElementById('modal-step-2').style.display = 'none';
+});
+
+// Submit
+document.getElementById('order-submit').addEventListener('click', async () => {
+  const { merch, ui } = CONFIG;
+  const ord      = ui.order;
   const btn      = document.getElementById('order-submit');
   const feedback = document.getElementById('order-feedback');
 
   btn.disabled    = true;
-  btn.textContent = t(ui.order.sending);
+  btn.textContent = t(ord.sending);
 
   try {
     const res = await fetch(merch.orderEndpoint, {
@@ -507,10 +622,13 @@ orderForm.addEventListener('submit', async (e) => {
     });
 
     if (res.ok) {
-      feedback.style.color = 'var(--green)';
-      feedback.textContent = t(ui.order.success);
-      orderForm.reset();
-      setTimeout(closeOrderModal, 2500);
+      const method = orderForm.querySelector('input[name="payment_method"]:checked')?.value;
+      document.getElementById('order-summary').innerHTML =
+        `<p style="color:var(--green);font-weight:600;margin-bottom:12px">${t(ord.success)}</p>` +
+        `<p style="font-size:0.88rem;color:var(--text-muted)">${t(ord.confirmEmail)}</p>`;
+      renderPaymentInstructions(method);
+      document.getElementById('modal-step2-actions') && (document.querySelector('.modal-step2-actions').style.display = 'none');
+      setTimeout(closeOrderModal, 4000);
     } else {
       throw new Error();
     }
@@ -519,9 +637,13 @@ orderForm.addEventListener('submit', async (e) => {
     feedback.textContent = t(ui.order.error);
   } finally {
     btn.disabled    = false;
-    btn.textContent = t(ui.order.submit);
+    btn.textContent = t(ord.submit);
   }
 });
+
+modalClose.addEventListener('click', closeOrderModal);
+orderModal.addEventListener('click', (e) => { if (e.target === orderModal) closeOrderModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeOrderModal(); });
 
 // ═══════════════════════════════════════════════
 // LANGUAGE TOGGLE
@@ -545,16 +667,20 @@ langBtn.addEventListener('click', () => {
 
 // ── Navbar scroll effect ──────────────────────
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
+function updateNavbar() {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
+}
+window.addEventListener('scroll', updateNavbar, { passive: true });
+updateNavbar(); // run immediately in case page loads already scrolled
 
 // ── Hamburger menu ────────────────────────────
 const hamburger = document.getElementById('hamburger');
 hamburger.addEventListener('click', () => {
   const navLinks = document.getElementById('nav-links');
   const isOpen   = navLinks.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
+  document.body.classList.toggle('menu-open', isOpen);
   document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 

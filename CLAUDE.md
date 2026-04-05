@@ -38,10 +38,10 @@ The site uses a strict content/presentation/behaviour separation across three fi
 
 ## TODO
 
-- **Better merch order form** — the current modal is functional but basic. Consider adding: product image preview inside the modal, size guide tooltip, order summary before submission, and confirmation email to the buyer. Also multiple images per product.
-- **Better mobile UI** — review and improve layout on small screens: the team grid (4 columns) collapses poorly on mobile and i don't want to scroll all the grid to pass through this section, the roadmap timeline zigzag is hard to read on narrow viewports, and the navbar can overflow on very small devices. Also the gallery and best fans are poorly rendered.
+
+- better merch
+- menu doesn't render ok
+
 - reachable site, actually is not reachable out of local network
 - don't add photo in git, just add it in server (add them to personal nas?)
-- use static form instead of formspree for free plan email OR other (do not pay!)- make the source code private
 - auto push website
-- payment method on form, description on payment (iban or paypal)

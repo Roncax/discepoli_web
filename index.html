@@ -126,41 +126,84 @@
     </div>
   </footer>
 
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Immagine ingrandita">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi">✕</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
   <!-- Order Modal -->
   <div class="modal-overlay" id="order-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal">
       <button class="modal-close" id="modal-close" aria-label="Chiudi">✕</button>
+
+      <div class="modal-images" id="modal-images">
+        <img class="modal-img-main" id="modal-img-main" src="" alt="" />
+        <div class="modal-img-thumbs" id="modal-img-thumbs"></div>
+      </div>
+
       <p class="modal-eyebrow" id="modal-eyebrow"></p>
       <h3 class="modal-title" id="modal-title"></h3>
-      <form class="modal-form" id="order-form">
-        <input type="hidden" name="product" id="order-product" />
-        <div class="form-group">
-          <label for="order-name" id="label-order-name">Nome</label>
-          <input type="text" id="order-name" name="name" required />
+
+      <!-- Step 1: Form -->
+      <div id="modal-step-1">
+        <form class="modal-form" id="order-form">
+          <input type="hidden" name="product"   id="order-product" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_subject"  id="order-subject" />
+          <input type="hidden" name="_replyto"  id="order-replyto" />
+          <div class="form-group">
+            <label for="order-name" id="label-order-name"></label>
+            <input type="text" id="order-name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="order-email" id="label-order-email"></label>
+            <input type="email" id="order-email" name="email" />
+          </div>
+          <div class="form-group">
+            <label for="order-phone" id="label-order-phone"></label>
+            <input type="tel" id="order-phone" name="phone" required />
+          </div>
+          <div class="form-group" id="size-group">
+            <label for="order-size" id="label-order-size"></label>
+            <select id="order-size" name="size"></select>
+          </div>
+          <div class="form-group">
+            <label for="order-qty" id="label-order-qty"></label>
+            <input type="number" id="order-qty" name="quantity" min="1" value="1" required />
+          </div>
+          <div class="form-group">
+            <label for="order-msg" id="label-order-msg"></label>
+            <textarea id="order-msg" name="message" rows="3"></textarea>
+          </div>
+          <div class="form-group" id="payment-group">
+            <label id="label-order-payment"></label>
+            <div class="payment-options">
+              <label class="payment-option">
+                <input type="radio" name="payment_method" value="paypal" required />
+                <span id="label-paypal"></span>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment_method" value="iban" />
+                <span id="label-iban"></span>
+              </label>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" id="order-next"></button>
+        </form>
+      </div>
+
+      <!-- Step 2: Summary + submit -->
+      <div id="modal-step-2" style="display:none">
+        <div class="order-summary" id="order-summary"></div>
+        <div class="payment-instructions" id="payment-instructions"></div>
+        <div class="modal-step2-actions">
+          <button type="button" class="btn btn-outline" id="order-back"></button>
+          <button type="button" class="btn btn-primary" id="order-submit"></button>
         </div>
-        <div class="form-group">
-          <label for="order-email" id="label-order-email">Email</label>
-          <input type="email" id="order-email" name="email" />
-        </div>
-        <div class="form-group">
-          <label for="order-phone" id="label-order-phone">Telefono</label>
-          <input type="tel" id="order-phone" name="phone" required />
-        </div>
-        <div class="form-group" id="size-group">
-          <label for="order-size" id="label-order-size">Taglia</label>
-          <select id="order-size" name="size"></select>
-        </div>
-        <div class="form-group">
-          <label for="order-qty" id="label-order-qty">Quantità</label>
-          <input type="number" id="order-qty" name="quantity" min="1" value="1" required />
-        </div>
-        <div class="form-group">
-          <label for="order-msg" id="label-order-msg">Messaggio personalizzato</label>
-          <textarea id="order-msg" name="message" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary" id="order-submit">Invia ordine</button>
         <p class="form-feedback" id="order-feedback"></p>
-      </form>
+      </div>
+
     </div>
   </div>
 

@@ -236,11 +236,14 @@ img { display: block; max-width: 100%; }
 .hamburger {
   display: none;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
+  min-width: 40px;
+  min-height: 40px;
 }
 .hamburger span {
   display: block;
@@ -248,8 +251,13 @@ img { display: block; max-width: 100%; }
   height: 2px;
   background: var(--white);
   border-radius: 2px;
-  transition: all var(--transition);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
 }
+/* X state when open */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ═══════════════════════════
    HERO
@@ -693,6 +701,7 @@ img { display: block; max-width: 100%; }
   width: 100%;
   height: 140px;
   object-fit: cover;
+  cursor: zoom-in;
   border-radius: var(--radius-sm);
   margin-bottom: 12px;
   display: block;
@@ -925,6 +934,51 @@ img { display: block; max-width: 100%; }
 
 
 /* ═══════════════════════════
+   LIGHTBOX
+   ═══════════════════════════ */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  cursor: zoom-out;
+}
+.lightbox-overlay.open { opacity: 1; pointer-events: all; }
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  cursor: default;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 1;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+/* ═══════════════════════════
    ORDER MODAL
    ═══════════════════════════ */
 .modal-overlay {
@@ -1022,6 +1076,101 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 0 3px rgba(45, 206, 108, 0.12);
 }
 
+/* ── Modal image strip ── */
+.modal-images { margin-bottom: 20px; }
+.modal-img-main {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+.modal-img-thumbs { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.modal-img-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+.modal-img-thumb.active,
+.modal-img-thumb:hover { border-color: var(--green); opacity: 1; }
+
+/* ── Payment options ── */
+.payment-options { display: flex; gap: 20px; margin-top: 6px; }
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.payment-option input[type="radio"] { accent-color: var(--green); }
+
+/* ── Order summary ── */
+.order-summary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.order-summary h4 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-label { color: var(--text-muted); }
+
+/* ── Payment instructions ── */
+.payment-instructions {
+  background: rgba(190,206,45,0.07);
+  border: 1px solid rgba(190,206,45,0.2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.payment-instructions h4 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--green);
+  margin-bottom: 12px;
+}
+.iban-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  padding: 4px 0;
+  gap: 12px;
+}
+.iban-label { color: var(--text-muted); flex-shrink: 0; }
+.paypal-link {
+  display: inline-block;
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ── Step 2 actions ── */
+.modal-step2-actions { display: flex; gap: 12px; margin-bottom: 12px; }
+.modal-step2-actions .btn { flex: 1; }
+
 /* ═══════════════════════════
    FOOTER
    ═══════════════════════════ */
@@ -1079,8 +1228,58 @@ img { display: block; max-width: 100%; }
 /* ═══════════════════════════
    RESPONSIVE
    ═══════════════════════════ */
+
+/* ── Tablet (≤900px) ── */
 @media (max-width: 900px) {
-.timeline::before { left: 14px; }
+  /* Navbar: always opaque on mobile — no transparent phase */
+  .navbar { background: rgba(13, 15, 14, 0.97); backdrop-filter: blur(12px); }
+
+  /* Remove backdrop-filter from navbar when menu is open —
+     backdrop-filter creates a stacking context that clips position:fixed children */
+  body.menu-open .navbar,
+  body.menu-open .navbar.scrolled {
+    backdrop-filter: none !important;
+  }
+
+  /* Overlay menu */
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13,15,14,0.98);
+    backdrop-filter: blur(16px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    z-index: 9999;
+    list-style: none;
+    overflow-y: auto;
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { width: 100%; text-align: center; }
+  .nav-links a {
+    display: block;
+    font-size: 1.5rem;
+    font-family: var(--font-display);
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.8);
+    padding: 8px 0;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--green); }
+  .nav-cta {
+    background: none !important;
+    color: var(--green) !important;
+    border: none !important;
+    padding: 8px 0 !important;
+  }
+  .hamburger { display: flex; z-index: 10000; }
+
+  /* Roadmap: drop zigzag to single left-aligned column */
+  .timeline::before { left: 14px; }
   .timeline-item.left,
   .timeline-item.right {
     width: calc(100% - 42px);
@@ -1090,26 +1289,34 @@ img { display: block; max-width: 100%; }
   .timeline-item.left  .timeline-dot { left: -30px; right: auto; }
   .timeline-item.right .timeline-dot { left: -30px; }
 
+  /* Team & fans: 2 columns instead of 4 */
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Gallery: 2 columns */
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item.large { grid-column: span 1; grid-row: span 1; }
+  .gallery-item.tall  { grid-row: span 1; }
 }
 
+/* ── Mobile (≤640px) ── */
 @media (max-width: 640px) {
   .section { padding: 72px 0; }
   .section-header { margin-bottom: 44px; }
 
-  .nav-links {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(13,15,14,0.98);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 36px;
-    z-index: 99;
+  /* Navbar: tighten padding and shrink logo */
+  .logo-text { font-size: 1.1rem; }
+  .logo-icon { height: 26px; }
+  .nav-inner { padding: 0 16px; }
+  .nav-links a { font-size: 1.3rem; }
+
+  /* Team & fans: 1 column on very small screens */
+  .team-grid { grid-template-columns: 1fr; max-height: 480px; }
+
+  /* Gallery: 1 column */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px;
   }
-  .nav-links.open { display: flex; }
-  .nav-links a { font-size: 1.4rem; }
-  .hamburger { display: flex; z-index: 101; }
 
   .hero-actions { flex-direction: column; align-items: center; }
 
