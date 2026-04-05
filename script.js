@@ -80,7 +80,6 @@ if (CONFIG.hero.image) {
       img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
       item.appendChild(img);
       item.appendChild(el('div', 'gallery-overlay', `<span>${t(alt) || ''}</span>`));
-      item.addEventListener('click', () => openLightbox(src, t(alt) || ''));
       grid.appendChild(item);
     });
   } else {
@@ -266,11 +265,6 @@ function renderRoadmap() {
 
     panel.appendChild(timeline);
     panelsContainer.appendChild(panel);
-  });
-
-  panelsContainer.addEventListener('click', (e) => {
-    const img = e.target.closest('.tournament-img');
-    if (img) openLightbox(img.src, img.alt);
   });
 
   tabsContainer.addEventListener('click', (e) => {
@@ -463,6 +457,26 @@ function closeLightbox() {
 lightboxClose.addEventListener('click', closeLightbox);
 lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+// Global image click → lightbox
+// Covers gallery, merch, players, fans, board, tournaments, modal images
+document.body.addEventListener('click', (e) => {
+  const img = e.target.closest('img');
+  if (img && img.src) {
+    if (img.closest('#lightbox')) return;
+    if (img.classList.contains('modal-img-thumb')) return;
+    if (img.classList.contains('logo-icon')) return;
+    if (img.classList.contains('sponsor-logo')) return;
+    openLightbox(img.src, img.alt);
+    return;
+  }
+  // Gallery item click may land on the overlay div instead of the img
+  const galleryItem = e.target.closest('.gallery-item');
+  if (galleryItem) {
+    const galleryImg = galleryItem.querySelector('img');
+    if (galleryImg && galleryImg.src) openLightbox(galleryImg.src, galleryImg.alt);
+  }
+});
 
 // ═══════════════════════════════════════════════
 // ORDER MODAL

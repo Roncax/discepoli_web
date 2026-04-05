@@ -522,37 +522,37 @@ const CONFIG = {
     // size: "large" (2×2), "tall" (1×2), or omit for normal
     photos: [
       {
-        src: "photos/gallery/gallery_1.jpg",
+        src: "photos/gallery/team.jpg",
         alt: { it: "Holy Party", en: "Holy Party" },
         size: "large",
       },
       {
-        src: "https://picsum.photos/seed/gal2/400/300",
-        alt: { it: "Terzo tempo", en: "After-match" },
+        src: "photos/gallery/gallery_3.jpg",
+        alt: { it: "Allenamento", en: "Training" },
       },
       {
-        src: "https://picsum.photos/seed/gal3/400/300",
+        src: "photos/gallery/team_2.jpg",
         alt: { it: "Riscaldamento", en: "Warm-up" },
       },
       {
-        src: "https://picsum.photos/seed/gal4/400/600",
+        src: "photos/gallery/gallery_1.jpg",
         alt: { it: "Foto di squadra", en: "Team photo" },
         size: "tall",
       },
       {
-        src: "https://picsum.photos/seed/gal5/400/300",
+        src: "photos/gallery/biso_gallery.jpg",
         alt: { it: "In campo", en: "On the pitch" },
       },
       {
-        src: "https://picsum.photos/seed/gal6/400/300",
+        src: "photos/gallery/tarvisio.jpg",
         alt: { it: "Esultanza", en: "Celebration" },
       },
       {
-        src: "https://picsum.photos/seed/gal7/400/300",
+        src: "photos/gallery/gallery_2.jpg",
         alt: { it: "Allenamento", en: "Training" },
       },
       {
-        src: "https://picsum.photos/seed/gal7/400/300",
+        src: "photos/gallery/gallery_4.jpg",
         alt: { it: "Allenamento", en: "Training" },
       },
     ],

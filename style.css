@@ -465,6 +465,7 @@ img { display: block; max-width: 100%; }
 .player-photo {
   width: 100%;
   aspect-ratio: 4/3;
+  cursor: zoom-in;
   object-fit: cover;
 }
 
@@ -777,6 +778,7 @@ img { display: block; max-width: 100%; }
   background: linear-gradient(135deg, #181e18, #101410);
   border-bottom: 1px solid var(--border);
 }
+.merch-img img { cursor: zoom-in; }
 
 .merch-badge {
   position: absolute;
@@ -868,6 +870,7 @@ img { display: block; max-width: 100%; }
 .board-photo {
   width: 100px;
   height: 100px;
+  cursor: zoom-in;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--border);
@@ -1082,9 +1085,28 @@ img { display: block; max-width: 100%; }
 .modal-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.modal-form input[type="text"],
+.modal-form input[type="email"],
+.modal-form input[type="tel"],
+.modal-form input[type="number"],
+.modal-form textarea,
 .modal-form select {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1092,17 +1114,32 @@ img { display: block; max-width: 100%; }
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.95rem;
-  padding: 13px 16px;
-  transition: border-color var(--transition);
+  padding: 11px 14px;
   width: 100%;
-  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  box-sizing: border-box;
 }
 
+.modal-form input::placeholder,
+.modal-form textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.modal-form input:focus,
+.modal-form textarea:focus,
 .modal-form select:focus {
   outline: none;
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(45, 206, 108, 0.12);
+  box-shadow: 0 0 0 3px rgba(190,206,45,0.12);
 }
+
+.modal-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-form select { cursor: pointer; }
 
 /* ── Modal image strip ── */
 .modal-images { margin-bottom: 20px; }
@@ -1198,6 +1235,12 @@ img { display: block; max-width: 100%; }
 /* ── Step 2 actions ── */
 .modal-step2-actions { display: flex; gap: 12px; margin-bottom: 12px; }
 .modal-step2-actions .btn { flex: 1; }
+
+.form-feedback {
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin-top: 4px;
+}
 
 /* ═══════════════════════════
    FOOTER
