@@ -707,6 +707,34 @@ img { display: block; max-width: 100%; }
   display: block;
 }
 
+.tournament-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.tournament-date,
+.tournament-location {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.tournament-drive-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(190,206,45,0.3);
+  border-radius: 100px;
+  padding: 3px 10px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.tournament-drive-link:hover {
+  background: var(--green-glow);
+  border-color: rgba(190,206,45,0.6);
+}
+
 .tournament-result {
   display: inline-block;
   margin-top: 8px;

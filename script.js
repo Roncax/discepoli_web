@@ -248,14 +248,18 @@ function renderRoadmap() {
     panel.id       = panelId;
     const timeline = el('div', 'timeline');
 
-    tournaments.forEach(({ name, location, result, image }, i) => {
+    tournaments.forEach(({ name, date, location, result, image, driveUrl }, i) => {
       timeline.appendChild(el('div', `timeline-item ${sides[i % 2]}`, `
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           ${image ? `<img class="tournament-img" src="${image}" alt="${t(name)}" loading="lazy" />` : ''}
-          ${location ? `<span class="timeline-year">📍 ${t(location)}</span>` : ''}
+          <div class="tournament-meta">
+            ${date     ? `<span class="tournament-date">📅 ${date}</span>`         : ''}
+            ${location ? `<span class="tournament-location">📍 ${t(location)}</span>` : ''}
+          </div>
           <h3>${t(name)}</h3>
-          ${result ? `<span class="tournament-result">${t(result)}</span>` : ''}
+          ${result   ? `<span class="tournament-result">${t(result)}</span>` : ''}
+          ${driveUrl ? `<a class="tournament-drive-link" href="${driveUrl}" target="_blank" rel="noopener">🖼 Foto</a>` : ''}
         </div>
       `));
     });
@@ -615,26 +619,27 @@ document.getElementById('order-submit').addEventListener('click', async () => {
   btn.textContent = t(ord.sending);
 
   try {
-    const res = await fetch(merch.orderEndpoint, {
+    const res  = await fetch(merch.orderEndpoint, {
       method:  'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(new FormData(orderForm))),
+      headers: { 'Accept': 'application/json' },
+      body:    new FormData(orderForm),
     });
+    const json = await res.json();
 
-    if (res.ok) {
+    if (json.success === 'true') {
       const method = orderForm.querySelector('input[name="payment_method"]:checked')?.value;
       document.getElementById('order-summary').innerHTML =
         `<p style="color:var(--green);font-weight:600;margin-bottom:12px">${t(ord.success)}</p>` +
         `<p style="font-size:0.88rem;color:var(--text-muted)">${t(ord.confirmEmail)}</p>`;
       renderPaymentInstructions(method);
-      document.getElementById('modal-step2-actions') && (document.querySelector('.modal-step2-actions').style.display = 'none');
+      document.querySelector('.modal-step2-actions').style.display = 'none';
       setTimeout(closeOrderModal, 4000);
     } else {
-      throw new Error();
+      throw new Error(json.message || '');
     }
-  } catch {
+  } catch (err) {
     feedback.style.color = '#e05555';
-    feedback.textContent = t(ui.order.error);
+    feedback.textContent = t(ui.order.error) + (err.message ? ` (${err.message})` : '');
   } finally {
     btn.disabled    = false;
     btn.textContent = t(ord.submit);

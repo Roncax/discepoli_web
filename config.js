@@ -196,7 +196,7 @@ const CONFIG = {
         name: "Affusino",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player1/400/300",
+        photo: "photos/players/affusino.jpg",
       },
       {
         number: 2,
@@ -245,14 +245,14 @@ const CONFIG = {
         name: "Cristian",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player8/400/300",
+        photo: "photos/players/cris.jpg",
       },
       {
         number: 9,
         name: "Cuzzo",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player9/400/300",
+        photo: "photos/players/cuzzo.jpg",
       },
       {
         number: 10,
@@ -273,7 +273,7 @@ const CONFIG = {
         name: "Divino",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player12/400/300",
+        photo: "photos/players/divi.jpg",
       },
       {
         number: 13,
@@ -294,14 +294,14 @@ const CONFIG = {
         name: "Franco",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player15/400/300",
+        photo: "photos/players/franco.jpg",
       },
       {
         number: 16,
         name: "Giec",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player16/400/300",
+        photo: "photos/players/giec.jpg",
       },
       {
         number: 17,
@@ -350,7 +350,7 @@ const CONFIG = {
         name: "Mastro",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player23/400/300",
+        photo: "photos/players/mastro.jpg",
       },
       {
         number: 24,
@@ -378,7 +378,7 @@ const CONFIG = {
         name: "Paolino",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player27/400/300",
+        photo: "photos/players/paolino.jpg",
       },
       {
         number: 28,
@@ -420,7 +420,7 @@ const CONFIG = {
         name: "Romanò",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player33/400/300",
+        photo: "photos/players/romano.jpg",
       },
       {
         number: 34,
@@ -462,28 +462,28 @@ const CONFIG = {
         name: "Signo",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player39/400/300",
+        photo: "photos/players/signo.jpg",
       },
       {
         number: 40,
         name: "Tav",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player40/400/300",
+        photo: "photos/players/tav.jpg",
       },
       {
         number: 41,
         name: "Telli",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player41/400/300",
+        photo: "photos/players/telli.jpg",
       },
       {
         number: 42,
         name: "Tim",
         role: { it: "Ruolo", en: "Role" },
         bio: { it: "Descrizione del giocatore.", en: "Player description." },
-        photo: "https://picsum.photos/seed/player42/400/300",
+        photo: "photos/players/tim.jpg",
       },
       {
         number: 43,
@@ -522,8 +522,8 @@ const CONFIG = {
     // size: "large" (2×2), "tall" (1×2), or omit for normal
     photos: [
       {
-        src: "https://drive.google.com/uc?export=view&id=1TOKJk6bYvinFZdixx05rco2ZyeotR2VE",
-        alt: { it: "Partita 2025", en: "Match 2025" },
+        src: "photos/gallery/gallery_1.jpg",
+        alt: { it: "Holy Party", en: "Holy Party" },
         size: "large",
       },
       {
@@ -551,6 +551,10 @@ const CONFIG = {
         src: "https://picsum.photos/seed/gal7/400/300",
         alt: { it: "Allenamento", en: "Training" },
       },
+      {
+        src: "https://picsum.photos/seed/gal7/400/300",
+        alt: { it: "Allenamento", en: "Training" },
+      },
     ],
     placeholderCount: 7,
   },
@@ -570,35 +574,35 @@ const CONFIG = {
         tournaments: [
           {
             name: { it: "Seven of the Heaven", en: "Seven of the Heaven" },
-            location: "19/05",
+            date: "19/05",
           },
           {
             name: { it: "Beach Cologno", en: "Beach Cologno" },
-            location: "25/05",
+            date: "25/05",
           },
-          { name: { it: "Cologno", en: "Cologno" }, location: "01/06" },
-          { name: { it: "MRF", en: "MRF" }, location: "7-8-9/06" },
+          { name: { it: "Cologno", en: "Cologno" }, date: "01/06" },
+          { name: { it: "Milano Rugby Festival", en: "Milano Rugby Festival" }, date: "7-8-9/06" },
           {
             name: { it: "Gussago Seven", en: "Gussago Seven" },
-            location: "15/06",
+            date: "15/06",
           },
           {
             name: { it: "Valdobbiadene", en: "Valdobbiadene" },
-            location: "22/06",
+            date: "22/06",
           },
-          { name: { it: "PizziTorneo", en: "PizziTorneo" }, location: "29/06" },
+          { name: { it: "PizziTorneo", en: "PizziTorneo" }, date: "29/06" },
           {
             name: { it: "Alpago Beach", en: "Alpago Beach" },
-            location: "06/07",
+            date: "06/07",
           },
           {
             name: { it: "Grigliatona Cuoricina", en: "Grigliatona Cuoricina" },
-            location: "13-14/07",
+            date: "13-14/07",
           },
-          { name: { it: "X-Masters", en: "X-Masters" }, location: "20-21/07" },
+          { name: { it: "X-Masters", en: "X-Masters" }, date: "20-21/07" },
           {
             name: { it: "Ritiro Spirituale", en: "Ritiro Spirituale" },
-            location: "27-28/07",
+            date: "27-28/07",
           },
         ],
       },
@@ -608,19 +612,19 @@ const CONFIG = {
         tournaments: [
           {
             name: { it: "Arena Sevens", en: "Arena Sevens" },
-            location: "18/06",
+            date: "18/06",
           },
           {
             name: { it: "Rosolina Beach", en: "Rosolina Beach" },
-            location: "02-03/07",
+            date: "02-03/07",
           },
           {
             name: { it: "Grigliata Ottiglio", en: "Grigliata Ottiglio" },
-            location: "09-10/07",
+            date: "09-10/07",
           },
           {
             name: { it: "Alpago Beach", en: "Alpago Beach" },
-            location: "16-17/07",
+            date: "16-17/07",
           },
         ],
       },
@@ -633,20 +637,28 @@ const CONFIG = {
               it: "OffBeat 7's / Lainate 7's",
               en: "OffBeat 7's / Lainate 7's",
             },
-            location: "27/05",
+            date: "27/05",
+            image: "photos/tournaments/offbeat_2023.jpg",
           },
-          { name: { it: "MRF", en: "MRF" }, location: "03-04/06" },
+          {
+            name: { it: "Milano Rugby Festival", en: "Milano Rugby Festival" },
+            date: "03-04/06",
+            image: "photos/tournaments/mrf_2023.jpg",
+          },
           {
             name: { it: "Novara Beach", en: "Novara Beach" },
-            location: "17/06",
+            date: "17/06",
+            image: "photos/tournaments/novara_2023.jpg",
           },
           {
             name: { it: "Figueira Beach", en: "Figueira Beach" },
-            location: "30/06-03/07",
+            date: "30/06-03/07",
+            image: "photos/tournaments/figueira_2023.png",
           },
           {
             name: { it: "Alpago Beach", en: "Alpago Beach" },
-            location: "15/07",
+            date: "15/07",
+            image: "photos/tournaments/alpago_2023.jpg",
           },
         ],
       },
@@ -655,43 +667,44 @@ const CONFIG = {
         status: "past",
         tournaments: [
           {
-            name: { it: "MRF", en: "MRF" },
-            location: "31/05-02/06",
-            image: "https://picsum.photos/seed/mrf2024/600/300",
+            name: { it: "Milano Rugby Festival", en: "Milano Rugby Festival" },
+            date: "31/05-02/06",
+            image: "photos/tournaments/mrf_2024.jpg",
+
           },
           {
             name: { it: "Arena Sevens", en: "Arena Sevens" },
-            location: "08/06",
+            date: "08/06",
           },
           {
             name: { it: "Annone Touch", en: "Annone Touch" },
-            location: "15/06",
+            date: "15/06",
           },
           {
             name: { it: "L'aia Beach", en: "L'aia Beach" },
-            location: "22-23/06 🇳🇱",
+            date: "22-23/06 🇳🇱",
             image: "https://picsum.photos/seed/laia2024/600/300",
           },
           {
             name: { it: "Grigliata Ottiglio", en: "Grigliata Ottiglio" },
-            location: "29-30/06",
+            date: "29-30/06",
             image: "https://picsum.photos/seed/ottiglio2024/600/300",
           },
           {
             name: { it: "Tolosa Water Touch", en: "Tolosa Water Touch" },
-            location: "06-07/07 🇫🇷",
+            date: "06-07/07 🇫🇷",
             image: "https://picsum.photos/seed/tolosa2024/600/300",
           },
           {
             name: { it: "Alpago Beach", en: "Alpago Beach" },
-            location: "13-14/07",
+            date: "13-14/07",
           },
           {
             name: {
               it: "Attività fine stagione",
               en: "End of season activity",
             },
-            location: "20-21/07",
+            date: "20-21/07",
           },
         ],
       },
@@ -701,43 +714,43 @@ const CONFIG = {
         tournaments: [
           {
             name: { it: "Snow Rugby", en: "Snow Rugby" },
-            location: "11-12/01",
+            date: "11-12/01",
             image: "https://picsum.photos/seed/snow2025/600/300",
           },
           {
             name: { it: "Noceto Touch", en: "Noceto Touch" },
-            location: "24-25/05",
+            date: "24-25/05",
           },
           {
-            name: { it: "MRF", en: "MRF" },
-            location: "31/05-01/06",
-            image: "https://picsum.photos/seed/mrf2025/600/300",
+            name: { it: "Milano Rugby Festival", en: "Milano Rugby Festival" },
+            date: "31/05-01/06",
+            image: "photos/tournaments/mrf_2025.jpg",
           },
           {
             name: {
               it: "Torneo Città di Rovato",
               en: "Torneo Città di Rovato",
             },
-            location: "07/06",
+            date: "07/06",
           },
-          { name: { it: "Varese 7's", en: "Varese 7's" }, location: "14/06" },
+          { name: { it: "Varese 7's", en: "Varese 7's" }, date: "14/06" },
           {
             name: { it: "Touch Annone", en: "Touch Annone" },
-            location: "21/06",
+            date: "21/06",
           },
           {
             name: { it: "Grigliata Ottiglio", en: "Grigliata Ottiglio" },
-            location: "28/06",
+            date: "28/06",
             image: "https://picsum.photos/seed/ottiglio2025/600/300",
           },
           {
             name: { it: "Alpago Beach", en: "Alpago Beach" },
-            location: "12-13/07",
+            date: "12-13/07",
             image: "https://picsum.photos/seed/alpago2025/600/300",
           },
           {
             name: { it: "Cheltenham 7's", en: "Cheltenham 7's" },
-            location: "18-19/07 🇬🇧",
+            date: "18-19/07 🇬🇧",
             image: "https://picsum.photos/seed/cheltenham2025/600/300",
           },
         ],
@@ -746,35 +759,35 @@ const CONFIG = {
         year: "2026",
         status: "active",
         tournaments: [
-          { name: { it: "Touch Cluri", en: "Touch Cluri" }, location: "02/05" },
+          { name: { it: "Touch Cluri", en: "Touch Cluri" }, date: "02/05" },
           {
             name: { it: "Festa Discepoli", en: "Festa Discepoli" },
-            location: "9 o 16/05",
+            date: "9 o 16/05",
           },
           {
             name: { it: "San Marino 7's", en: "San Marino 7's" },
-            location: "23-24/05",
+            date: "23-24/05",
           },
-          { name: { it: "MRF", en: "MRF" }, location: "30-31/05" },
+          { name: { it: "Milano Rugby Festival", en: "Milano Rugby Festival" }, date: "30-31/05" },
           {
             name: { it: "Nocetouch / Para 7's", en: "Nocetouch / Para 7's" },
-            location: "06/06",
+            date: "06/06",
           },
           {
             name: {
               it: "Varese 7's / Rovato 7's / Valtellina 7's",
               en: "Varese 7's / Rovato 7's / Valtellina 7's",
             },
-            location: "13/06",
+            date: "13/06",
           },
           {
             name: {
               it: "Annone Touch / Off Beat 7's",
               en: "Annone Touch / Off Beat 7's",
             },
-            location: "20/06",
+            date: "20/06",
           },
-          { name: { it: "Calvi 7's", en: "Calvi 7's" }, location: "27-28/06" },
+          { name: { it: "Calvi 7's", en: "Calvi 7's" }, date: "27-28/06" },
         ],
       },
       {
@@ -803,31 +816,40 @@ const CONFIG = {
     },
     fans: [
       {
-        name: "Alice",
-        title: { it: "Fan #1", en: "Fan #1" },
+        name: "Potti",
+        title: { it: "Supporter #1", en: "Supporter #1" },
         bio: {
-          it: "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.",
-          en: "Fan description — how long they've followed the team, anecdotes, why they're the best.",
+          it: "La supporter numero uno, presente fin dall'inizio. ",
+          en: "The number one supporter, there from day one. ",
         },
-        photo: "https://picsum.photos/seed/fan1/400/300",
+        photo: "photos/fans/potti.jpg",
+      },
+      {
+        name: "Alice",
+        title: { it: "Team Manager", en: "Team Manager" },
+        bio: {
+          it: "La TM che ci sopporta e tiene a bada il jack-sistema. Organizza il caos con il sorriso.",
+          en: "The TM who puts up with us and keeps the jack-system in check. Manages the chaos with a smile.",
+        },
+        photo: "photos/fans/ali.jpg",
       },
       {
         name: "Rwan",
-        title: { it: "Fan #2", en: "Fan #2" },
+        title: { it: "Fan & Giocatore Onorario", en: "Fan & Honorary Player" },
         bio: {
-          it: "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.",
-          en: "Fan description — how long they've followed the team, anecdotes, why they're the best.",
+          it: "Tifoso doc che ha anche messo gli scarpini in un paio di tornei. Sa di cosa parla.",
+          en: "A true fan who also laced up his boots at a couple of tournaments. He knows what he's talking about.",
         },
-        photo: "https://picsum.photos/seed/fan2/400/300",
+        photo: "photos/fans/ru.jpg",
       },
       {
-        name: "Potti",
-        title: { it: "Fan #3", en: "Fan #3" },
+        name: "Camo",
+        title: { it: "Patron del Moss", en: "Moss Patron" },
         bio: {
-          it: "Descrizione del tifoso — da quanto segue la squadra, aneddoti, motivo per cui è il migliore.",
-          en: "Fan description — how long they've followed the team, anecdotes, why they're the best.",
+          it: "Proprietario del Moss Bar e fornitore ufficiale del luogo sacro dove si tengono le nostre feste. Senza di lui non ci sarebbe il dopo-torneo.",
+          en: "Owner of Moss Bar and official provider of the sacred venue for our parties. Without him there's no after-party.",
         },
-        photo: "https://picsum.photos/seed/fan3/400/300",
+        photo: "photos/fans/camo.jpg",
       },
     ],
   },
@@ -941,6 +963,7 @@ const CONFIG = {
           it: "Cattura ogni momento sul campo e fuori. Se una foto è bella, è merito suo.",
           en: "Captures every moment on and off the pitch. If a photo looks good, credit goes to him.",
         },
+        photo: "photos/board/dade.jpg",
       },
     ],
   },
@@ -953,7 +976,7 @@ const CONFIG = {
       it: "Indossa i colori dei Discepoli. Essere parte della famiglia non è solo in campo.",
       en: "Wear the Discepoli colours. Being part of the family goes beyond the pitch.",
     },
-    orderEndpoint: "https://formsubmit.co/discepoliteam@gmail.com",
+    orderEndpoint: "https://formsubmit.co/ajax/discepoliteam@gmail.com",
     payment: {
       iban: {
         holder: "Giacomo Pozzi",
@@ -1050,7 +1073,7 @@ const CONFIG = {
     },
     email: "discepoliteam@gmail.com",
     phone: "+39 366 3586183",
-    location: "Paradiso, Ovunque",
+    date: "Paradiso, Ovunque",
     socials: {
       instagram: "https://www.instagram.com/i_discepoli/",
       facebook: "https://es-la.facebook.com/IDiscepoliRugby/",

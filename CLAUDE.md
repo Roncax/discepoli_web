@@ -39,9 +39,6 @@ The site uses a strict content/presentation/behaviour separation across three fi
 ## TODO
 
 
-- better merch
-- menu doesn't render ok
-
 - reachable site, actually is not reachable out of local network
 - don't add photo in git, just add it in server (add them to personal nas?)
 - auto push website
