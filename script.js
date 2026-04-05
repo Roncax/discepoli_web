@@ -60,8 +60,11 @@ if (CONFIG.hero.image) {
 // Gallery (photos don't change with language — only alt text does, minor)
 (function renderGallery() {
   const { gallery } = CONFIG;
+  const driveBtn = gallery.driveUrl
+    ? `<a href="${gallery.driveUrl}" target="_blank" rel="noopener" class="btn btn-outline gallery-drive-btn">${t(CONFIG.ui.galleryDriveLink)}</a>`
+    : '';
   document.getElementById('gallery-header').innerHTML =
-    sectionHeader(gallery.tag, gallery.title, gallery.subtitle);
+    sectionHeader(gallery.tag, gallery.title, gallery.subtitle) + driveBtn;
 
   const grid = document.getElementById('gallery-grid');
   grid.innerHTML = '';
@@ -88,20 +91,6 @@ if (CONFIG.hero.image) {
   }
 })();
 
-// Contact form (structure stays, only labels/placeholders update)
-document.getElementById('contact-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const feedback = document.getElementById('form-feedback');
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = t(CONFIG.ui.form.sending);
-  setTimeout(() => {
-    feedback.textContent = t(CONFIG.ui.form.success);
-    e.target.reset();
-    btn.disabled = false;
-    btn.textContent = t(CONFIG.ui.form.submit);
-  }, 1200);
-});
 
 // ═══════════════════════════════════════════════
 // RENDER FUNCTIONS (re-run on language switch)
@@ -121,6 +110,7 @@ function renderNav() {
     { key: 'roadmap',  href: '#roadmap'  },
     { key: 'merch',    href: '#merch'    },
     { key: 'fans',     href: '#fans'     },
+    { key: 'sponsors', href: '#sponsors' },
     { key: 'board',    href: '#board'    },
     { key: 'contacts', href: '#contacts', cta: true },
   ];
@@ -144,12 +134,51 @@ function renderNav() {
   });
 }
 
+let _typewriterTimer = null;
+
+function startTypewriter(words, el) {
+  if (_typewriterTimer) { clearTimeout(_typewriterTimer); _typewriterTimer = null; }
+  const typeSpeed        = 80;
+  const deleteSpeed      = 40;
+  const pauseAfterType   = 1800;
+  const pauseAfterDelete = 400;
+  let wordIndex = 0;
+  let charIndex = 0;
+  let deleting  = false;
+
+  function tick() {
+    const current = words[wordIndex];
+    if (deleting) {
+      charIndex--;
+      el.textContent = current.slice(0, charIndex);
+      if (charIndex === 0) {
+        deleting   = false;
+        wordIndex  = (wordIndex + 1) % words.length;
+        _typewriterTimer = setTimeout(tick, pauseAfterDelete);
+      } else {
+        _typewriterTimer = setTimeout(tick, deleteSpeed);
+      }
+    } else {
+      charIndex++;
+      el.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) {
+        deleting = true;
+        _typewriterTimer = setTimeout(tick, pauseAfterType);
+      } else {
+        _typewriterTimer = setTimeout(tick, typeSpeed);
+      }
+    }
+  }
+  tick();
+}
+
 function renderHero() {
   const { site, ui } = CONFIG;
   document.title = site.title;
-  document.getElementById('hero-eyebrow').textContent  = t(site.eyebrow);
-  document.getElementById('hero-title').textContent    = site.teamName;
-  document.getElementById('hero-subtitle').textContent = t(site.tagline);
+  document.getElementById('hero-eyebrow').textContent = t(site.eyebrow);
+  document.getElementById('hero-title').textContent   = site.teamName;
+  document.getElementById('hero-dynamic-prefix').textContent = t(site.dynamicDescription.prefix);
+  startTypewriter(site.dynamicDescription.words.map(w => t(w)), document.getElementById('hero-dynamic-word'));
   document.getElementById('hero-actions').innerHTML = `
     <a href="#team"  class="btn btn-primary">${t(ui.hero.primary)}</a>
     <a href="#merch" class="btn btn-outline">${t(ui.hero.secondary)}</a>
@@ -262,27 +291,52 @@ function renderFans() {
   });
 }
 
+function renderSponsors() {
+  const { sponsors } = CONFIG;
+  document.getElementById('sponsors-header').innerHTML = sectionHeader(sponsors.tag, sponsors.title, sponsors.subtitle);
+  const grid = document.getElementById('sponsors-grid');
+  grid.innerHTML = '';
+  sponsors.items.forEach(({ name, logo, url }) => {
+    const logoHTML = logo
+      ? `<img class="sponsor-logo" src="${logo}" alt="${name}" loading="lazy" />`
+      : `<div class="sponsor-logo-placeholder">${name.charAt(0).toUpperCase()}</div>`;
+    const card = el('a', 'sponsor-card', `${logoHTML}<span class="sponsor-name">${name}</span>`);
+    card.href   = url;
+    card.target = '_blank';
+    card.rel    = 'noopener';
+    grid.appendChild(card);
+  });
+}
+
 function renderMerch() {
   const { merch, ui } = CONFIG;
   document.getElementById('merch-header').innerHTML = sectionHeader(merch.tag, merch.title, merch.subtitle);
-  document.getElementById('merch-note').textContent = t(merch.note);
-  const grid = document.getElementById('merch-grid');
+const grid = document.getElementById('merch-grid');
   grid.innerHTML = '';
-  merch.products.forEach(({ name, desc, price, badge, badgeStyle, image, sizes }) => {
+  merch.products.forEach(({ name, desc, price, badge, badgeStyle, image, sizes, availability }) => {
+    const isOut     = availability === 'out';
+    const isOnSight = availability === 'on-sight';
+    const outBadge  = isOut ? `<span class="merch-badge out">${t(ui.availabilityOut)}</span>` : '';
     const badgeHTML = badge ? `<span class="merch-badge${badgeStyle === 'new' ? ' new' : ''}">${t(badge)}</span>` : '';
     const imgHTML   = image ? `<img src="${image}" alt="${t(name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />` : '';
+    const priceHTML = isOnSight
+      ? `<span class="merch-availability on-sight">${t(ui.availabilityOnSight)}</span>`
+      : `<span class="merch-price">${price}</span>`;
+    const btnDisabled = isOut || isOnSight;
     const card = el('div', 'merch-card', `
-      <div class="merch-img placeholder-img">${imgHTML}${badgeHTML}</div>
+      <div class="merch-img placeholder-img">${imgHTML}${outBadge}${badgeHTML}</div>
       <div class="merch-info">
         <h3 class="merch-name">${t(name)}</h3>
         <p class="merch-desc">${t(desc)}</p>
-        <span class="merch-price">${price}</span>
-        <button class="btn btn-primary btn-sm merch-buy-btn">${t(ui.buy)}</button>
+        ${priceHTML}
+        <button class="btn btn-primary btn-sm merch-buy-btn"${btnDisabled ? ' disabled' : ''}>${t(ui.buy)}</button>
       </div>
     `);
-    card.querySelector('.merch-buy-btn').addEventListener('click', () => {
-      openOrderModal(t(name), sizes || []);
-    });
+    if (!btnDisabled) {
+      card.querySelector('.merch-buy-btn').addEventListener('click', () => {
+        openOrderModal(t(name), sizes || []);
+      });
+    }
     grid.appendChild(card);
   });
 }
@@ -309,42 +363,34 @@ function renderContacts() {
   const { contacts, ui } = CONFIG;
   document.getElementById('contacts-header').innerHTML = sectionHeader(contacts.tag, contacts.title, contacts.subtitle);
 
+  function socialHandle(url) {
+    return url ? url.replace(/\/$/, '').split('/').pop() : '';
+  }
+
+  const items = [
+    { icon: '📧', label: t(ui.contact.emailLabel),    html: `<a href="mailto:${contacts.email}">${contacts.email}</a>` },
+    { icon: '📱', label: t(ui.contact.phoneLabel),    html: `<a href="tel:${contacts.phone.replace(/\s/g, '')}">${contacts.phone}</a>` },
+    { icon: '📍', label: t(ui.contact.locationLabel), html: `<p>${contacts.location}</p>` },
+  ];
+
+  if (contacts.socials.instagram) {
+    items.push({ icon: '📸', label: t(ui.contact.instagramLabel), html: `<a href="${contacts.socials.instagram}" target="_blank" rel="noopener">@${socialHandle(contacts.socials.instagram)}</a>` });
+  }
+  if (contacts.socials.facebook) {
+    items.push({ icon: '👥', label: t(ui.contact.facebookLabel), html: `<a href="${contacts.socials.facebook}" target="_blank" rel="noopener">${socialHandle(contacts.socials.facebook)}</a>` });
+  }
+  if (contacts.socials.linktree) {
+    items.push({ icon: '🌿', label: t(ui.contact.linktreeLabel), html: `<a href="${contacts.socials.linktree}" target="_blank" rel="noopener">${socialHandle(contacts.socials.linktree)}</a>` });
+  }
+
   const contactInfo = document.getElementById('contact-info');
-  contactInfo.innerHTML = `
+  contactInfo.innerHTML = items.map(({ icon, label, html }) => `
     <div class="contact-item">
-      <div class="contact-icon">📧</div>
-      <div><h4>${t(ui.contact.emailLabel)}</h4><a href="mailto:${contacts.email}">${contacts.email}</a></div>
+      <div class="contact-icon">${icon}</div>
+      <div><h4>${label}</h4>${html}</div>
     </div>
-    <div class="contact-item">
-      <div class="contact-icon">📍</div>
-      <div><h4>${t(ui.contact.locationLabel)}</h4><p>${contacts.location}</p></div>
-    </div>
-    <div class="contact-item">
-      <div class="contact-icon">📱</div>
-      <div><h4>${t(ui.contact.phoneLabel)}</h4><a href="tel:${contacts.phone.replace(/\s/g, '')}">${contacts.phone}</a></div>
-    </div>
-  `;
+  `).join('');
 
-  const socialsDiv = el('div', 'contact-socials');
-  Object.entries(contacts.socials).forEach(([name, href]) => {
-    if (!href || !ICONS[name]) return;
-    const a = el('a', 'social-btn');
-    a.href = href;
-    a.setAttribute('aria-label', name);
-    a.innerHTML = ICONS[name];
-    socialsDiv.appendChild(a);
-  });
-  contactInfo.appendChild(socialsDiv);
-
-  // Form labels & placeholders
-  const { form } = ui;
-  document.querySelector('label[for="f-name"]').textContent    = t(form.name);
-  document.querySelector('label[for="f-email"]').textContent   = t(form.email);
-  document.querySelector('label[for="f-message"]').textContent = t(form.message);
-  document.getElementById('f-name').placeholder    = t(form.namePh);
-  document.getElementById('f-email').placeholder   = t(form.emailPh);
-  document.getElementById('f-message').placeholder = t(form.messagePh);
-  document.querySelector('#contact-form button[type="submit"]').textContent = t(form.submit);
 }
 
 function renderFooter() {
@@ -376,6 +422,7 @@ function renderAll() {
   renderTeam();
   renderRoadmap();
   renderFans();
+  renderSponsors();
   renderMerch();
   renderBoard();
   renderContacts();

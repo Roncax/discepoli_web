@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loading…</title>
+  <link rel="icon" href="photos/logo.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,7 +16,7 @@
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="#hero" class="logo" id="nav-logo">
-        <span class="logo-icon">🏉</span>
+        <img class="logo-icon" src="photos/logo.png" alt="I Discepoli" />
         <span class="logo-text" id="nav-team-name"></span>
       </a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -31,7 +32,7 @@
     <div class="hero-content">
       <p class="hero-eyebrow" id="hero-eyebrow"></p>
       <h1 class="hero-title" id="hero-title"></h1>
-      <p class="hero-subtitle" id="hero-subtitle"></p>
+      <p class="hero-subtitle" id="hero-subtitle"><span id="hero-dynamic-prefix"></span><span id="hero-dynamic-word"></span><span class="typewriter-cursor">|</span></p>
       <div class="hero-actions" id="hero-actions"></div>
     </div>
     <a href="#values" class="scroll-indicator" aria-label="Scorri">
@@ -79,7 +80,6 @@
     <div class="container">
       <div class="section-header" id="merch-header"></div>
       <div class="merch-grid" id="merch-grid"></div>
-      <p class="merch-note" id="merch-note"></p>
     </div>
   </section>
 
@@ -88,6 +88,14 @@
     <div class="container">
       <div class="section-header" id="fans-header"></div>
       <div class="team-grid" id="fans-grid"></div>
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <section class="section" id="sponsors">
+    <div class="container">
+      <div class="section-header" id="sponsors-header"></div>
+      <div class="sponsors-grid" id="sponsors-grid"></div>
     </div>
   </section>
 
@@ -103,25 +111,7 @@
   <section class="section section-dark" id="contacts">
     <div class="container">
       <div class="section-header" id="contacts-header"></div>
-      <div class="contacts-layout">
-        <div class="contact-info" id="contact-info"></div>
-        <form class="contact-form" id="contact-form">
-          <div class="form-group">
-            <label for="f-name">Nome</label>
-            <input type="text" id="f-name" name="name" placeholder="Il tuo nome" required />
-          </div>
-          <div class="form-group">
-            <label for="f-email">Email</label>
-            <input type="email" id="f-email" name="email" placeholder="la@tua.email" required />
-          </div>
-          <div class="form-group">
-            <label for="f-message">Messaggio</label>
-            <textarea id="f-message" name="message" rows="5" placeholder="Scrivi qui..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Invia messaggio</button>
-          <p class="form-feedback" id="form-feedback"></p>
-        </form>
-      </div>
+      <div class="contact-info" id="contact-info"></div>
     </div>
   </section>
 

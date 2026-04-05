@@ -16,11 +16,15 @@ const CONFIG = {
   site: {
     title: "I Discepoli – Rugby Team",
     teamName: "I Discepoli",
-    accentColor: "#bece2d",
+    accentColor: "#4684f7f6",
     eyebrow: { it: "Rugby Club · Religione", en: "Rugby Club · Religion" },
-    tagline: {
-      it: "Uniti dal fango, dalla passione e dal terzo tempo.",
-      en: "United by mud, passion, and the after-match.",
+    dynamicDescription: {
+      prefix: { it: "Siamo ", en: "We are " },
+      words: [
+        { it: "una squadra di rugby", en: "a rugby team" },
+        { it: "un culto", en: "a cult" },
+        { it: "i migliori in città", en: "the best in town" },
+      ],
     },
   },
 
@@ -33,6 +37,7 @@ const CONFIG = {
       roadmap: { it: "Roadmap", en: "Roadmap" },
       merch: { it: "Merch", en: "Merch" },
       fans: { it: "Tifosi", en: "Fans" },
+      sponsors: { it: "Sponsor", en: "Sponsors" },
       board: { it: "Board", en: "Board" },
       contacts: { it: "Contatti", en: "Contacts" },
     },
@@ -44,6 +49,9 @@ const CONFIG = {
       emailLabel: { it: "Email", en: "Email" },
       phoneLabel: { it: "Telefono", en: "Phone" },
       locationLabel: { it: "Dove giochiamo", en: "Where we play" },
+      instagramLabel: { it: "Instagram", en: "Instagram" },
+      facebookLabel: { it: "Facebook", en: "Facebook" },
+      linktreeLabel: { it: "Link", en: "Links" },
     },
     form: {
       name: { it: "Nome", en: "Name" },
@@ -87,6 +95,12 @@ const CONFIG = {
       en: "All rights reserved.",
     },
     addPhoto: { it: "📸 Aggiungi foto", en: "📸 Add photo" },
+    galleryDriveLink: {
+      it: "Vedi tutto su Drive →",
+      en: "View all on Drive →",
+    },
+    availabilityOut:     { it: "Fuori produzione",       en: "OUT of production"              },
+    availabilityOnSight: { it: "Disponibile quando ci vedi", en: "Available whenever you see us" },
   },
 
   // ── Hero ─────────────────────────────────────────────
@@ -96,43 +110,43 @@ const CONFIG = {
 
   // ── Values & Objectives ──────────────────────────────
   values: {
-    tag: { it: "Chi siamo", en: "About us" },
-    title: { it: "Valori & Obiettivi", en: "Values & Objectives" },
+    tag: { it: "Il Vangelo", en: "The Gospel" },
+    title: { it: "I Comandamenti", en: "The Commandments" },
     subtitle: {
-      it: "Siamo un gruppo di amici che ogni estate si trasforma in una squadra. Il rugby è il pretesto, la fratellanza è lo scopo.",
-      en: "We are a group of friends who turn into a team every summer. Rugby is the excuse, brotherhood is the goal.",
+      it: "Scritti nel fango, tramandati di meta in meta. Rivelati dal Divino in persona. Chi li viola, paga il terzo tempo.",
+      en: "Written in the mud, passed down try by try. Revealed by Divino himself. Those who break them buy the after-match.",
     },
     items: [
       {
-        icon: "⚡",
-        title: { it: "Spirito di squadra", en: "Team spirit" },
+        icon: "✝️",
+        title: { it: "La Fede viene prima", en: "Faith comes first" },
         text: {
-          it: "In campo e fuori, vince chi non lascia indietro nessuno. Ogni placcaggio è condiviso, ogni meta è di tutti.",
-          en: "On and off the pitch, the real winners are those who leave no one behind. Every tackle is shared, every try belongs to all.",
+          it: "Non importa il punteggio, non importa il meteo, non importa se hai le ginocchia rotte. Si scende in campo. Sempre. Il Divino lo vuole.",
+          en: "Score doesn't matter, weather doesn't matter, broken knees don't matter. You take the field. Always. Divino wills it.",
         },
       },
       {
-        icon: "🔥",
-        title: { it: "Passione autentica", en: "Authentic passion" },
+        icon: "🍺",
+        title: { it: "Il Terzo Tempo è Sacro", en: "The After-Match is Sacred" },
         text: {
-          it: "Non siamo professionisti, ma giochiamo con la stessa intensità. La passione non si allena, si vive.",
-          en: "We're not professionals, but we play with the same intensity. Passion can't be trained — it's lived.",
+          it: "La partita finisce al fischio. Il terzo tempo non finisce mai. Chi lascia prima del secondo giro è un eretico e verrà giudicato.",
+          en: "The game ends at the whistle. The after-match never ends. Those who leave before the second round are heretics and shall be judged.",
         },
       },
       {
-        icon: "🤝",
-        title: { it: "Rispetto", en: "Respect" },
+        icon: "🙏",
+        title: { it: "Ama il tuo compagno", en: "Love thy teammate" },
         text: {
-          it: "Per l'avversario, per il campo, per il terzo tempo. Il rugby insegna a rispettare chi ti affronta.",
-          en: "For the opponent, the field, the after-match. Rugby teaches you to respect those who face you.",
+          it: "Anche quando sbaglia la meta a tre metri dalla linea. Anche quando passa la palla al momento sbagliato. Soprattutto allora.",
+          en: "Even when he drops the try three metres from the line. Even when he passes at the wrong moment. Especially then.",
         },
       },
       {
-        icon: "🎯",
-        title: { it: "Obiettivi", en: "Objectives" },
+        icon: "😇",
+        title: { it: "Il Martire del Campo", en: "The Field Martyr" },
         text: {
-          it: "Crescere ogni anno, portare nuovi giocatori, disputare più tornei estivi e alzare qualche trofeo.",
-          en: "Grow every year, bring in new players, enter more summer tournaments, and lift a trophy or two.",
+          it: "Ogni squadra ha il suo santo patrono: quello che gioca infortunato, che corre in difesa quando tutti mollano, e che porta le birre senza lamentarsi.",
+          en: "Every team has its patron saint: the one who plays injured, who runs in defence when everyone gives up, and carries the beers without complaint.",
         },
       },
     ],
@@ -473,6 +487,8 @@ const CONFIG = {
       it: "Immagini dal campo, dal terzo tempo e da tutto il resto.",
       en: "Photos from the pitch, the after-match, and everything in between.",
     },
+    driveUrl:
+      "https://drive.google.com/drive/folders/1FgG4gxCDIsFki6w36vsNjNwX84Otm0bR?usp=sharing",
     // size: "large" (2×2), "tall" (1×2), or omit for normal
     photos: [
       {
@@ -771,6 +787,33 @@ const CONFIG = {
     ],
   },
 
+  // ── Sponsors ─────────────────────────────────────────
+  sponsors: {
+    tag: { it: "Partner", en: "Partners" },
+    title: { it: "I Nostri Sponsor", en: "Our Sponsors" },
+    subtitle: {
+      it: "Grazie a chi rende possibile tutto questo.",
+      en: "Thanks to those who make all this possible.",
+    },
+    items: [
+      {
+        name: "Armauto",
+        url: "https://www.instagram.com/armauto_service/",
+        logo: "photos/sponsors/armauto.jpg",
+      },
+      {
+        name: "Ginger 3D",
+        url: "https://www.gingeradditive.com/",
+        logo: "photos/sponsors/ginger3d.png",
+      },
+      {
+        name: "Moss",
+        url: "https://www.facebook.com/MossMonza/",
+        logo: "photos/sponsors/moss.png",
+      },
+    ],
+  },
+
   // ── Holy Board ───────────────────────────────────────
   board: {
     tag: { it: "La Dirigenza", en: "Management" },
@@ -846,6 +889,14 @@ const CONFIG = {
         },
         photo: "photos/board/tommy.jpg",
       },
+      {
+        name: "Dade",
+        role: { it: "Fotografo", en: "Photographer" },
+        bio: {
+          it: "Cattura ogni momento sul campo e fuori. Se una foto è bella, è merito suo.",
+          en: "Captures every moment on and off the pitch. If a photo looks good, credit goes to him.",
+        },
+      },
     ],
   },
 
@@ -856,10 +907,6 @@ const CONFIG = {
     subtitle: {
       it: "Indossa i colori dei Discepoli. Essere parte della famiglia non è solo in campo.",
       en: "Wear the Discepoli colours. Being part of the family goes beyond the pitch.",
-    },
-    note: {
-      it: "Per qualsiasi domanda scrivici a discepoliteam@gmail.com",
-      en: "For any question write us at discepoliteam@gmail.com",
     },
     // ↓ Get this URL from formspree.io after creating a free form pointed at discepoliteam@gmail.com
     orderEndpoint: "https://formspree.io/f/mreookwb",
@@ -873,6 +920,7 @@ const CONFIG = {
         price: "€ 10,00",
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
         image: "photos/merch/kit_2024_front.png",
+        availability: "on-sight",
       },
       {
         name: { it: "Divisa (2024)", en: "Kit (2024)" },
@@ -894,6 +942,7 @@ const CONFIG = {
         price: "€ 15,00",
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
         image: "photos/merch/kit_2024_front.png",
+        availability: "out",
       },
       {
         name: { it: "Cappellino", en: "Cap" },
@@ -906,6 +955,7 @@ const CONFIG = {
         badge: { it: "Nuovo", en: "New" },
         badgeStyle: "new",
         image: "photos/merch/cap_front.png",
+        availability: "on-sight",
       },
       {
         name: { it: "Canotta", en: "Vest" },
@@ -916,6 +966,7 @@ const CONFIG = {
         price: "€ 22,00",
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
         image: "photos/merch/kit_2024_front.png",
+        availability: "on-sight",
       },
       {
         name: { it: "Santini", en: "Holy Card" },
@@ -926,6 +977,7 @@ const CONFIG = {
         price: "Un abbraccio",
         sizes: ["Unica"],
         image: "photos/merch/kit_2024_front.png",
+        availability: "out",
       },
       {
         name: { it: "Sticker", en: "Sticker" },
@@ -936,6 +988,7 @@ const CONFIG = {
         price: "Un backflip",
         sizes: [],
         image: "photos/merch/kit_2024_front.png",
+        availability: "on-sight",
       },
     ],
   },
@@ -954,6 +1007,8 @@ const CONFIG = {
     socials: {
       instagram: "https://www.instagram.com/i_discepoli/",
       facebook: "https://es-la.facebook.com/IDiscepoliRugby/",
+      linktree: "https://linktr.ee/idiscepoli",
     },
   },
 };
+nm;
