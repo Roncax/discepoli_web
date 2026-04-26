@@ -35,3 +35,6 @@ The site uses a strict content/presentation/behaviour separation across three fi
 - Roadmap item `status` must be `"past"`, `"active"`, or `"future"` — drives CSS classes and the glowing dot.
 - Merch badge color: default green; add `badgeStyle: "new"` for gold.
 - Setting a social to `null` in `CONFIG.contacts.socials` hides that icon entirely.
+
+## TODO
+- website hosted outside github pages (call fastweb for static public ip)

@@ -206,16 +206,15 @@ function renderTeam() {
   document.getElementById('team-header').innerHTML = sectionHeader(team.tag, team.title, team.subtitle);
   const grid = document.getElementById('team-grid');
   grid.innerHTML = '';
-  team.players.forEach(({ number, name, role, bio, photo }) => {
+  [...team.players].sort((a, b) => a.nickname.localeCompare(b.nickname)).forEach(({ name, nickname, bio, photo }) => {
     const photoHTML = photo
       ? `<img class="player-photo" src="${photo}" alt="${name}" loading="lazy" />`
       : `<div class="player-photo placeholder-photo"><span>👤</span></div>`;
     grid.appendChild(el('div', 'player-card', `
       ${photoHTML}
       <div class="player-info">
-        <span class="player-number">#${number}</span>
         <h3 class="player-name">${name}</h3>
-        <span class="player-role">${t(role)}</span>
+        <span class="player-role">${t(nickname)}</span>
         <p class="player-bio">${t(bio)}</p>
       </div>
     `));
